@@ -1,0 +1,44 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: main-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: main
+    password: main
+    url: jdbc:postgresql://localhost:6542/main
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: always
+
+logging:
+  level:
+    main:
+      server:
+        events:
+          services:
+            impls:
+              PublicServiceImpl: DEBUG
+    client:
+      StatsClient: DEBUG
+
+
+
+
+
+
+  # Stats service configuration
+  #stats.service.enabled=true
+  #stats.service.host=stat-server
+  #stats.service.port=9090
+  #stats.service.scheme=http

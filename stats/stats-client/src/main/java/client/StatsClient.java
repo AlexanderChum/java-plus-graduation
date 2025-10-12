@@ -73,7 +73,7 @@ public class StatsClient {
     private ServiceInstance getInstance() {
         try {
             return discoveryClient
-                    .getInstances("STATS-SERVICE")
+                    .getInstances("STATS-SERVER")
                     .getFirst();
         } catch (Exception exception) {
             throw new StatsServerUnavailable("Ошибка обнаружения адреса сервиса статистики");

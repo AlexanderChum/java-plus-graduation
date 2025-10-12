@@ -114,6 +114,11 @@
             <artifactId>javax.annotation-api</artifactId>
             <version>${javax.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-netflix-eureka-client</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

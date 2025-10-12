@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: gateway-server
@@ -29,6 +32,3 @@ spring:
           uri: lb://main-service
           predicates:
             - Path=/admin/**
-
-server:
-  port: 8080

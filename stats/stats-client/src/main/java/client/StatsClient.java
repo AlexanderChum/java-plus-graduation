@@ -1,15 +1,18 @@
 package client;
 
+import lombok.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import stat.dto.EndpointHitDto;
 import stat.dto.ViewStatsDto;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -23,12 +26,15 @@ public class StatsClient {
 
     private final DiscoveryClient discoveryClient;
     private final RestTemplate restTemplate;
+    private final RetryTemplate retryTemplate;
+
     private String baseUrl;
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
 
-    public StatsClient(DiscoveryClient discoveryClient, RestTemplate restTemplate) {
+    public StatsClient(DiscoveryClient discoveryClient, RestTemplate restTemplate, RetryTemplate retryTemplate) {
         this.discoveryClient = discoveryClient;
         this.restTemplate = restTemplate;
+        this.retryTemplate = retryTemplate;
     }
 
     public ResponseEntity<EndpointHitDto> postHit(EndpointHitDto endpointHitDto) {
@@ -67,7 +73,7 @@ public class StatsClient {
     private ServiceInstance getInstance() {
         try {
             return discoveryClient
-                    .getInstances("stats-service")
+                    .getInstances("STATS-SERVICE")
                     .getFirst();
         } catch (Exception exception) {
             throw new StatsServerUnavailable("Ошибка обнаружения адреса сервиса статистики");
@@ -75,8 +81,7 @@ public class StatsClient {
     }
 
     private String makeUri() {
-        ServiceInstance instance = getInstance();
-        return instance.getUri().toString();
+        ServiceInstance instance = retryTemplate.execute(ctx -> getInstance());
+        return URI.create("http://" + instance.getHost() + ":" + instance.getPort()).toString();
     }
-
 }

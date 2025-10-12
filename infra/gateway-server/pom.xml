@@ -50,7 +50,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ru.yandex.practicum.GatewayService</mainClass>
+                    <mainClass>ru.yandex.practicum.GatewayServer</mainClass>
                 </configuration>
                 <executions>
                     <execution>

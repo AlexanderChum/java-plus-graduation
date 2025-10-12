@@ -8,27 +8,7 @@ spring:
     gateway:
       discovery.locator.enabled: true
       routes:
-        - id: main_service_category_route
+        - id: main_service_route
           uri: lb://main-service
           predicates:
-            - Path=/categories/**
-        - id: main_service_compilation_route
-          uri: lb://main-service
-          predicates:
-            - Path=/compilations/**
-        - id: main_service_event_route
-          uri: lb://main-service
-          predicates:
-            - Path=/events/**
-        - id: main_service_user_route
-          uri: lb://main-service
-          predicates:
-            - Path=/users/**
-        - id: main_service_commentary_route
-          uri: lb://main-service
-          predicates:
-            - Path=/comments/**
-        - id: main_service_admin_route
-          uri: lb://main-service
-          predicates:
-            - Path=/admin/**
+            - Path=/categories/**,/compilations/**,/events/**,/users/**,/comments/**,/admin/**

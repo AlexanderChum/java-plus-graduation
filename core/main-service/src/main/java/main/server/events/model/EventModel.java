@@ -44,7 +44,7 @@ public class EventModel {
     Long id;
 
     @Size(max = 2000)
-    @Column(name = "annotation", length = 2000)
+    @Column(name = "annotation")
     String annotation;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,7 +61,7 @@ public class EventModel {
     LocalDateTime createdOn;
 
     @Size(max = 7000)
-    @Column(name = "description", length = 7000)
+    @Column(name = "description")
     String description;
 
     @NotNull(message = "EventDate не должна быть пустой")

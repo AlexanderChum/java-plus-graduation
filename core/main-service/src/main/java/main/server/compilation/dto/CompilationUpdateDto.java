@@ -1,6 +1,5 @@
 package main.server.compilation.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +19,6 @@ public class CompilationUpdateDto {
     Set<Long> events;
     Boolean pinned;
 
-    @NotBlank
     @Length(min = 1, max = 50)
     String title;
 }

@@ -39,6 +39,7 @@ public class PrivateController {
     RequestService requestService;
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<EventShortDto> getUserEvents(@PathVariable
                                              @Positive
                                              Long userId,
@@ -63,6 +64,7 @@ public class PrivateController {
     }
 
     @GetMapping("/{eventId}")
+    @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventByEventIdAndUserId(@PathVariable @Positive Long userId,
                                                    @PathVariable @Positive Long eventId) {
         log.info("Получение полной информации о событии добавленном текущим пользователем");
@@ -70,6 +72,7 @@ public class PrivateController {
     }
 
     @PatchMapping("/{eventId}")
+    @ResponseStatus(HttpStatus.OK)
     public EventFullDto updateEventByEventId(@PathVariable @Positive Long userId,
                                              @PathVariable @Positive Long eventId,
                                              @Valid @RequestBody UpdateEventUserRequest updateEventDto) {
@@ -78,6 +81,7 @@ public class PrivateController {
     }
 
     @GetMapping("/{eventId}/requests")
+    @ResponseStatus(HttpStatus.OK)
     public List<ParticipationRequestDto> getEventRequestsByOwner(@PathVariable @Positive Long userId,
                                                                  @PathVariable @Positive Long eventId) {
         log.info("Получение информации о запросах на участие в событии текущего пользователя");
@@ -85,6 +89,7 @@ public class PrivateController {
     }
 
     @PatchMapping("/{eventId}/requests")
+    @ResponseStatus(HttpStatus.OK)
     public EventRequestStatusUpdateResultDto updateEventRequest(@PathVariable @Positive Long userId,
                                                                 @PathVariable @Positive Long eventId,
 

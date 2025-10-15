@@ -118,7 +118,7 @@ public class PrivateServiceImpl implements PrivateService {
         userExistence(userId);
         EventModel event = eventRepository.findByIdAndInitiatorId(eventId, userId)
                 .orElseThrow(() -> new NotFoundException(String.format("Событие с id= %d " +
-                                       "у пользователя с id= %d не найдено", eventId, userId)));
+                        "у пользователя с id= %d не найдено", eventId, userId)));
 
         log.debug("Сборка события для ответа");
         EventFullDto result = eventMapper.toFullDto(event);
@@ -132,8 +132,7 @@ public class PrivateServiceImpl implements PrivateService {
     }
 
     private Category categoryExistence(Long categoryId) {
-        return categoryService.findById(categoryId)
-                .orElseThrow(() -> new NotFoundException(String.format("Категория c id= %d не найдена", categoryId)));
+        return categoryService.findById(categoryId);
     }
 
     private void changeEventState(EventModel event, UpdateEventUserRequest update) {

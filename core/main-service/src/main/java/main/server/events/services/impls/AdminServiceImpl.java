@@ -49,7 +49,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Transactional(readOnly = true)
     public List<EventFullDto> getEventsWithAdminFilters(List<Long> users, List<String> states, List<Long> categories,
-        LocalDateTime rangeStart, LocalDateTime rangeEnd, Integer from, Integer size) {
+                                                        LocalDateTime rangeStart, LocalDateTime rangeEnd, Integer from, Integer size) {
 
         log.debug("Получен запрос на получения админ события по фильтрам");
         if ((rangeStart != null) && (rangeEnd != null) && (rangeStart.isAfter(rangeEnd)))
@@ -128,8 +128,7 @@ public class AdminServiceImpl implements AdminService {
         }
 
         if (updateRequest.getCategory() != null) {
-            Category category = categoryService.findById(updateRequest.getCategory())
-                    .orElseThrow(() -> new NotFoundException("Категория не найдена"));
+            Category category = categoryService.findById(updateRequest.getCategory());
             event.setCategory(category);
         }
 
@@ -197,4 +196,4 @@ public class AdminServiceImpl implements AdminService {
         }
         return viewsMap;
     }
- }
+}

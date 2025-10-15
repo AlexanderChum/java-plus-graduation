@@ -1,9 +1,12 @@
 package main.server.compilation.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Set;
@@ -12,9 +15,12 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompilationUpdateDto {
-    private Set<Long> events;
-    private Boolean pinned;
+    Set<Long> events;
+    Boolean pinned;
+
+    @NotBlank
     @Length(min = 1, max = 50)
-    private String title;
+    String title;
 }

@@ -1,7 +1,9 @@
 package main.server.compilation.service;
 
 import com.querydsl.core.types.Predicate;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import main.server.compilation.CompilationMapper;
 import main.server.compilation.CompilationRepository;
@@ -30,12 +32,13 @@ import java.util.Set;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Transactional
 public class CompilationServiceImpl implements CompilationService {
     private final CompilationRepository compilationRepository;
     private final CompilationMapper compilationMapper;
     private final PrivateServiceImpl eventService;
 
-    @Transactional
     @Override
     public CompilationDto addCompilation(NewCompilationDto newCompilationDto) {
         CompilationMapper.MapperContext context = new CompilationMapper.MapperContext(eventService);
@@ -58,7 +61,6 @@ public class CompilationServiceImpl implements CompilationService {
         return compilationMapper.toDto(savedCompilation);
     }
 
-    @Transactional
     @Override
     public void deleteCompilation(Long compId) {
         if (!compilationRepository.existsById(compId)) {
@@ -68,7 +70,6 @@ public class CompilationServiceImpl implements CompilationService {
         compilationRepository.deleteById(compId);
     }
 
-    @Transactional
     @Override
     public CompilationDto updateCompilation(Long compId, CompilationUpdateDto updateDto) {
         Compilation compilation = compilationRepository.findById(compId)

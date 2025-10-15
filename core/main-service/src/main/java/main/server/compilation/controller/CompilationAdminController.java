@@ -1,6 +1,8 @@
 package main.server.compilation.controller;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import main.server.compilation.dto.NewCompilationDto;
 import main.server.compilation.dto.CompilationDto;
@@ -22,8 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/admin/compilations")
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CompilationAdminController {
-    private final CompilationService compilationService;
+    CompilationService compilationService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -40,6 +43,7 @@ public class CompilationAdminController {
     }
 
     @PatchMapping("/{compId}")
+    @ResponseStatus(HttpStatus.OK)
     public CompilationDto updateCompilation(@PathVariable long compId,
                                             @RequestBody @Valid CompilationUpdateDto compilationUpdateDto) {
         log.info("Обновляем подборку id={}", compId);

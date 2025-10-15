@@ -1,9 +1,11 @@
 package main.server.compilation.dto;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import main.server.events.dto.EventShortDto;
 
 import java.util.Set;
@@ -12,9 +14,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompilationDto {
-    private Set<EventShortDto> events;
-    private Long id;
-    private Boolean pinned;
-    private String title;
+    Set<EventShortDto> events;
+    Long id;
+    Boolean pinned;
+    String title;
 }

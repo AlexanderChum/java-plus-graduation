@@ -5,10 +5,12 @@ import lombok.experimental.FieldDefaults;
 import main.server.location.Location;
 import main.server.location.LocationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
+@Transactional
 public class LocationServiceImpl implements LocationService {
     LocationRepository locationRepository;
 

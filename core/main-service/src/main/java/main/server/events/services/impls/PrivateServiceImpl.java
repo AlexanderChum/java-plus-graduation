@@ -222,7 +222,8 @@ public class PrivateServiceImpl implements PrivateService {
         return eventRepository.findAllById(ids);
     }
 
-    public Optional<EventModel> findById(Long id) {
-        return eventRepository.findById(id);
+    public EventModel findById(Long id) {
+        return eventRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Событие не было найдено"));
     }
 }

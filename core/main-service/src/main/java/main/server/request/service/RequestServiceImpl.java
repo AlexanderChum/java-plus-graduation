@@ -110,7 +110,7 @@ public class RequestServiceImpl implements RequestService {
         List<Long> requestIds = e.getRequestIds();
         RequestStatus status = e.getStatus();
 
-        if (!status.equals(RequestStatus.REJECTED) && !status.equals(RequestStatus.CONFIRMED)) {
+        if (!RequestStatus.REJECTED.equals(status) && !RequestStatus.CONFIRMED.equals(status)) {
             log.error("Недопустимый статус запроса: {}", status);
             throw new BadRequestException("Статус должен быть REJECTED или CONFIRMED");
         }

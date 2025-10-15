@@ -37,12 +37,14 @@ public class AdminUserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto createUser(@Valid @RequestBody NewUserDto newUserDto) {
+        log.info("Получен запрос на создание пользователя");
         return userService.createUser(newUserDto);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUserById(@PathVariable @Positive Long id) {
+        log.info("Получен запрос на удаление пользователя");
         userService.deleteUserById(id);
     }
 
@@ -55,11 +57,13 @@ public class AdminUserController {
                                      @Positive
                                      @RequestParam(name = "size", defaultValue = "10")
                                      Integer size) {
+        log.info("Получен запрос на получение пользователей");
         return userService.getUsers(userIds, from, size);
     }
 
     @PatchMapping("/{userId}")
     public UserDto updateUser(@PathVariable("userId") Long userId, @Valid @RequestBody UpdateUserDto updateUserDto) {
+        log.info("Получен запрос на обновление пользователя");
         return userService.updateUser(userId, updateUserDto);
     }
 }

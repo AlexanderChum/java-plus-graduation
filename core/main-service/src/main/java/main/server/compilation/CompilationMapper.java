@@ -39,7 +39,7 @@ public interface CompilationMapper {
 
     default EventModel mapToEventModel(Long eventId, @Context MapperContext context) {
         return (context != null && context.getEvenService() != null)
-                ? context.getEvenService().findById(eventId).orElse(null)
+                ? context.getEvenService().findById(eventId)
                 : null;
     }
 

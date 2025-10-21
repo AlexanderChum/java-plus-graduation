@@ -1,8 +1,8 @@
 package main.server.user;
 
-import main.server.user.dto.NewUserDto;
-import main.server.user.dto.UserDto;
-import main.server.user.dto.UserShortDto;
+import ru.yandex.practicum.users.dtos.NewUserDto;
+import ru.yandex.practicum.users.dtos.UserDto;
+import ru.yandex.practicum.users.dtos.UserShortDto;
 import main.server.user.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

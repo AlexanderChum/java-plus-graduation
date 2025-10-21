@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import main.server.events.enums.StateAction;
-import main.server.location.LocationDto;
+import ru.yandex.practicum.location.dtos.LocationDto;
 
 import java.time.LocalDateTime;
 

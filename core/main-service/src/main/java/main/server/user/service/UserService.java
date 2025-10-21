@@ -1,8 +1,8 @@
 package main.server.user.service;
 
-import main.server.user.dto.NewUserDto;
+import ru.yandex.practicum.users.dtos.NewUserDto;
 import main.server.user.dto.UpdateUserDto;
-import main.server.user.dto.UserDto;
+import ru.yandex.practicum.users.dtos.UserDto;
 
 import java.util.List;
 

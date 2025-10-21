@@ -17,12 +17,8 @@ import main.server.events.mapper.EventMapper;
 import main.server.events.model.EventModel;
 import main.server.events.repository.EventRepository;
 import main.server.events.services.PrivateService;
-import main.server.exception.BadRequestException;
-import main.server.exception.ConflictException;
-import main.server.exception.NotFoundException;
-import main.server.location.Location;
-import main.server.location.LocationMapper;
-import main.server.location.service.LocationServiceImpl;
+import ru.yandex.practicum.errors.exceptions.BadRequestException;
+import ru.yandex.practicum.errors.exceptions.ConflictException;
 import main.server.user.model.User;
 import main.server.user.service.UserServiceImpl;
 import org.springframework.data.domain.Page;
@@ -30,6 +26,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.yandex.practicum.errors.exceptions.NotFoundException;
+import ru.yandex.practicum.location.LocationFeignClient;
+import ru.yandex.practicum.location.dtos.LocationDto;
+import ru.yandex.practicum.mapper.LocationMapper;
 import stat.dto.ViewStatsDto;
 
 import java.time.LocalDateTime;
@@ -37,7 +37,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,9 +49,10 @@ public class PrivateServiceImpl implements PrivateService {
     EventMapper eventMapper;
     UserServiceImpl userService;
     CategoryServiceImpl categoryService;
-    LocationServiceImpl locationService;
-    LocationMapper locationMapper;
     StatsClient statsClient;
+
+    LocationFeignClient locationClient;
+    LocationMapper locationMapper;
 
     @Transactional
     public EventFullDto createEvent(NewEventDto newEvent, Long userId) {
@@ -60,11 +60,14 @@ public class PrivateServiceImpl implements PrivateService {
         User user = userExistence(userId);
         Category category = categoryExistence(newEvent.getCategory());
 
-        Location location = locationService.save(locationMapper.toEntity(newEvent.getLocationDto()));
+        Long locationId = locationClient.createLocation(newEvent.getLocationDto()).getId();
 
-        EventModel event = eventMapper.toEntity(newEvent, category, user, location);
+        EventModel event = eventMapper.toEntity(newEvent, category, user);
+        event.setLocationId(locationId);
 
-        return eventMapper.toFullDto(eventRepository.save(event));
+        EventFullDto result = eventMapper.toFullDto(eventRepository.save(event));
+        result.setLocationDto(locationClient.getLocation(locationId));
+        return result;
     }
 
     @Transactional
@@ -88,6 +91,7 @@ public class PrivateServiceImpl implements PrivateService {
         log.debug("Сборка события для ответа");
 
         EventFullDto result = eventMapper.toFullDto(event);
+        result.setLocationDto(locationClient.getLocation(event.getLocationId()));
         result.setViews(getAmountOfViews(List.of(event)).get(eventId));
         return result;
     }
@@ -122,6 +126,7 @@ public class PrivateServiceImpl implements PrivateService {
 
         log.debug("Сборка события для ответа");
         EventFullDto result = eventMapper.toFullDto(event);
+        result.setLocationDto(locationClient.getLocation(event.getLocationId()));
         result.setViews(getAmountOfViews(List.of(event)).get(eventId));
         return result;
     }
@@ -180,7 +185,8 @@ public class PrivateServiceImpl implements PrivateService {
         }
 
         if (update.getLocation() != null) {
-            event.setLocation(locationMapper.toEntity(update.getLocation()));
+            LocationDto locationDto = locationClient.createLocation(update.getLocation());
+            event.setLocationId(locationDto.getId());
         }
     }
 

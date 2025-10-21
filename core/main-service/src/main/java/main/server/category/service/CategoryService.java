@@ -1,7 +1,7 @@
 package main.server.category.service;
 
-import main.server.category.dto.CategoryDto;
-import main.server.category.dto.NewCategoryDto;
+import ru.yandex.practicum.category.dtos.CategoryDto;
+import ru.yandex.practicum.category.dtos.NewCategoryDto;
 
 import java.util.List;
 

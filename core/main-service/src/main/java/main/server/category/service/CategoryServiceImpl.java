@@ -3,20 +3,19 @@ package main.server.category.service;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import main.server.category.dto.CategoryDto;
-import main.server.category.dto.NewCategoryDto;
+import ru.yandex.practicum.category.dtos.CategoryDto;
+import ru.yandex.practicum.category.dtos.NewCategoryDto;
 import main.server.category.mapper.CategoryMapper;
 import main.server.category.model.Category;
 import main.server.category.repository.CategoryRepository;
 import main.server.events.model.EventModel;
 import main.server.events.services.PublicService;
-import main.server.exception.ConflictException;
-import main.server.exception.NotFoundException;
+import ru.yandex.practicum.errors.exceptions.ConflictException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.yandex.practicum.errors.exceptions.NotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

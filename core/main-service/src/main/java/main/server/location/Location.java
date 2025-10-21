@@ -1,4 +1,4 @@
-package main.server.location;
+/*package main.server.location;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,3 +37,4 @@ public class Location {
     @Column(name = "lon")
     Double lon;
 }
+*/

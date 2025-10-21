@@ -15,15 +15,15 @@ import main.server.events.mapper.EventMapper;
 import main.server.events.model.EventModel;
 import main.server.events.repository.EventRepository;
 import main.server.events.services.AdminService;
-import main.server.exception.BadRequestException;
-import main.server.exception.ConflictException;
-import main.server.exception.NotFoundException;
-import main.server.location.Location;
-import main.server.location.LocationMapper;
-import main.server.location.service.LocationServiceImpl;
+import ru.yandex.practicum.errors.exceptions.BadRequestException;
+import ru.yandex.practicum.errors.exceptions.ConflictException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.yandex.practicum.errors.exceptions.NotFoundException;
+import ru.yandex.practicum.location.LocationFeignClient;
+import ru.yandex.practicum.location.dtos.LocationDto;
+import ru.yandex.practicum.mapper.LocationMapper;
 import stat.dto.ViewStatsDto;
 
 import java.time.LocalDateTime;
@@ -43,9 +43,10 @@ public class AdminServiceImpl implements AdminService {
     EventMapper eventMapper;
     EventRepository eventRepository;
     CategoryServiceImpl categoryService;
-    LocationServiceImpl locationService;
-    LocationMapper locationMapper;
     StatsClient statsClient;
+
+    LocationFeignClient locationClient;
+    LocationMapper locationMapper;
 
     @Transactional(readOnly = true)
     public List<EventFullDto> getEventsWithAdminFilters(List<Long> users, List<String> states, List<Long> categories,
@@ -64,6 +65,7 @@ public class AdminServiceImpl implements AdminService {
         return events.stream()
                 .map(eventModel -> {
                     EventFullDto eventFull = eventMapper.toFullDto(eventModel);
+                    eventFull.setLocationDto(locationClient.getLocation(eventModel.getLocationId()));
                     eventFull.setViews(views.get(eventFull.getId()));
                     return eventFull;
                 })
@@ -86,6 +88,7 @@ public class AdminServiceImpl implements AdminService {
 
         log.debug("Сборка события для ответа");
         EventFullDto result = eventMapper.toFullDto(event);
+        result.setLocationDto(locationClient.getLocation(event.getLocationId()));
         result.setViews(getAmountOfViews(List.of(event)).get(eventId));
 
         return result;
@@ -157,9 +160,8 @@ public class AdminServiceImpl implements AdminService {
         }
 
         if (updateRequest.getLocationDto() != null) {
-            Location newLocation = locationMapper.toEntity(updateRequest.getLocationDto());
-            locationService.save(newLocation);
-            event.setLocation(newLocation);
+            LocationDto newLocation = locationClient.createLocation(updateRequest.getLocationDto());
+            event.setLocationId(newLocation.getId());
         }
     }
 

@@ -23,7 +23,6 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import main.server.category.model.Category;
 import main.server.events.enums.EventState;
-import main.server.location.Location;
 import main.server.user.model.User;
 import org.hibernate.annotations.Formula;
 
@@ -97,8 +96,6 @@ public class EventModel {
     @Column(name = "title")
     String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "location_id")
     @NotNull(message = "Location не должна быть пустой")
-    Location location;
+    Long locationId;
 }

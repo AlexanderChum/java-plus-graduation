@@ -2,12 +2,16 @@ package main.server.events.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import main.server.category.dto.CategoryDto;
+import ru.yandex.practicum.category.dtos.CategoryDto;
 import main.server.events.enums.EventState;
-import main.server.location.LocationDto;
-import main.server.user.dto.UserShortDto;
+import ru.yandex.practicum.users.dtos.UserShortDto;
+import ru.yandex.practicum.location.dtos.LocationDto;
 
 import java.time.LocalDateTime;
 

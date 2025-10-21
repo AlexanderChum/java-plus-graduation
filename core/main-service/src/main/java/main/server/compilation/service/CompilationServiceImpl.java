@@ -16,12 +16,12 @@ import main.server.compilation.model.QCompilation;
 import main.server.compilation.pagination.PaginationOffset;
 import main.server.events.model.EventModel;
 import main.server.events.services.impls.PrivateServiceImpl;
-import main.server.exception.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.yandex.practicum.errors.exceptions.NotFoundException;
 
 
 import java.util.ArrayList;

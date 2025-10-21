@@ -1,4 +1,4 @@
-package main.server.location;
+/*package main.server.location;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -10,3 +10,4 @@ public interface LocationMapper {
     @Mapping(target = "id", ignore = true)
     Location toEntity(LocationDto locationDto);
 }
+*/

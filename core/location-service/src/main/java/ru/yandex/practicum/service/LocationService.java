@@ -1,12 +1,10 @@
 package ru.yandex.practicum.service;
 
-import main.server.location.LocationDto;
+import ru.yandex.practicum.location.dtos.LocationDto;
 
 public interface LocationService {
 
     LocationDto createLocation(LocationDto dto);
-
-    LocationDto createLocation(Double lat, Double lon);
 
     LocationDto getLocation(Long locationId);
 }

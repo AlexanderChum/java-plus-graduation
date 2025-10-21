@@ -14,11 +14,13 @@ import main.server.events.mapper.EventMapper;
 import main.server.events.model.EventModel;
 import main.server.events.repository.EventRepository;
 import main.server.events.services.PublicService;
-import main.server.exception.BadRequestException;
-import main.server.exception.NotFoundException;
+import ru.yandex.practicum.errors.exceptions.BadRequestException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.yandex.practicum.errors.exceptions.NotFoundException;
+import ru.yandex.practicum.location.LocationFeignClient;
+import ru.yandex.practicum.mapper.LocationMapper;
 import stat.dto.EndpointHitDto;
 import stat.dto.ViewStatsDto;
 
@@ -41,9 +43,13 @@ public class PublicServiceImpl implements PublicService {
     JPAQueryFactory jpaQueryFactory;
     StatsClient statsClient;
 
+    LocationFeignClient locationClient;
+    LocationMapper locationMapper;
+
     @Transactional(readOnly = true)
     public List<EventShortDto> getEventsWithFilters(String text, List<Long> categories, Boolean paid,
-                                                    LocalDateTime rangeStart, LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Integer from,
+                                                    LocalDateTime rangeStart, LocalDateTime rangeEnd,
+                                                    Boolean onlyAvailable, String sort, Integer from,
                                                     Integer size, HttpServletRequest request) {
 
         log.debug("Получен запрос на получение public событий с фильтрами");
@@ -100,6 +106,7 @@ public class PublicServiceImpl implements PublicService {
 
         log.debug("Собираем событие для ответа");
         EventFullDto result = eventMapper.toFullDto(event);
+        result.setLocationDto(locationClient.getLocation(event.getLocationId()));
         Map<Long, Long> views = getAmountOfViews(List.of(event));
         result.setViews(views.getOrDefault(event.getId(), 0L));
 

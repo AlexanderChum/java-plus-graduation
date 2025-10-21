@@ -1,7 +1,7 @@
 package main.server.category.mapper;
 
-import main.server.category.dto.CategoryDto;
-import main.server.category.dto.NewCategoryDto;
+import ru.yandex.practicum.category.dtos.CategoryDto;
+import ru.yandex.practicum.category.dtos.NewCategoryDto;
 import main.server.category.model.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

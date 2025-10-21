@@ -1,4 +1,4 @@
-package main.server.location.service;
+/*package main.server.location.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,3 +19,4 @@ public class LocationServiceImpl implements LocationService {
         return locationRepository.save(location);
     }
 }
+*/

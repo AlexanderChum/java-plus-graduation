@@ -8,7 +8,7 @@ spring:
     driverClassName: org.postgresql.Driver
     username: location
     password: location
-    url: jdbc:postgresql://localhost:6550:location
+    url: jdbc:postgresql://localhost:6550/location
   jpa:
     hibernate:
       ddl-auto: create-drop

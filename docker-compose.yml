@@ -28,3 +28,48 @@ services:
       timeout: 5s
       interval: 5s
       retries: 10
+
+  location-db:
+    image: postgres:16.1
+    container_name: location
+    ports:
+      - "6550:5432"
+    environment:
+      - POSTGRES_PASSWORD=location
+      - POSTGRES_USER=location
+      - POSTGRES_DB=location
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
+
+  category-db:
+    image: postgres:16.1
+    container_name: category
+    ports:
+      - "6551:5432"
+    environment:
+      - POSTGRES_PASSWORD=category
+      - POSTGRES_USER=category
+      - POSTGRES_DB=category
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
+
+  user-db:
+    image: postgres:16.1
+    container_name: user
+    ports:
+      - "6552:5432"
+    environment:
+      - POSTGRES_PASSWORD=user
+      - POSTGRES_USER=user
+      - POSTGRES_DB=user
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10

@@ -16,6 +16,9 @@
         <module>infra</module>
         <module>stats</module>
         <module>core/location-service</module>
+        <module>core/category-service</module>
+        <module>core/interaction-api</module>
+        <module>core/user-service</module>
     </modules>
 
     <groupId>ru.practicum</groupId>
@@ -71,6 +74,12 @@
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
 

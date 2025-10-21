@@ -7,8 +7,17 @@ spring:
   cloud:
     gateway:
       discovery.locator.enabled: true
+      #routes:
+      #  - id: main_service_route
+      #    uri: lb://main-service
+      #    predicates:
+      #      - Path=/categories/**,/compilations/**,/events/**,/users/**,/comments/**,/admin/**
       routes:
-        - id: main_service_route
-          uri: lb://main-service
+        - id: category_service_route
+          uri: lb://category-service
           predicates:
-            - Path=/categories/**,/compilations/**,/events/**,/users/**,/comments/**,/admin/**
+            - Path=/categories/**,/admin/categories/**
+        - id: user_service_route
+          uri: lb://user-service
+          predicates:
+            - Path=/admin/users/**

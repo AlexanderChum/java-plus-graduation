@@ -34,8 +34,6 @@ CREATE TABLE IF NOT EXISTS event (
   CONSTRAINT fk_category_event FOREIGN KEY (category_id) REFERENCES categories(id)
      ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT fk_initiator_event FOREIGN KEY (initiator_id) REFERENCES users(id)
-     ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT fk_location_event FOREIGN KEY (location_id) REFERENCES location(id)
      ON UPDATE CASCADE ON DELETE CASCADE
 );
 

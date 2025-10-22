@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import main.server.events.model.EventModel;
-import main.server.events.enums.EventState;
+import ru.yandex.practicum.event.enums.EventState;
 import main.server.events.repository.EventRepository;
 import ru.yandex.practicum.errors.exceptions.BadRequestException;
 import ru.yandex.practicum.errors.exceptions.ConflictException;

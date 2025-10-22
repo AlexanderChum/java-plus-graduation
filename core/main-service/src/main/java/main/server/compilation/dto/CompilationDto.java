@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import main.server.events.dto.EventShortDto;
+import ru.yandex.practicum.event.dtos.EventShortDto;
 
 import java.util.Set;
 

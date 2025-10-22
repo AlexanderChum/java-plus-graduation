@@ -1,7 +1,7 @@
 package main.server.events.services;
 
-import main.server.events.dto.EventFullDto;
-import main.server.events.dto.UpdateEventAdminRequest;
+import ru.yandex.practicum.event.dtos.EventFullDto;
+import ru.yandex.practicum.event.dtos.UpdateEventAdminRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;

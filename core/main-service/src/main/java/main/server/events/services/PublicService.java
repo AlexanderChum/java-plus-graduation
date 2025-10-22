@@ -1,8 +1,8 @@
 package main.server.events.services;
 
 import jakarta.servlet.http.HttpServletRequest;
-import main.server.events.dto.EventFullDto;
-import main.server.events.dto.EventShortDto;
+import ru.yandex.practicum.event.dtos.EventFullDto;
+import ru.yandex.practicum.event.dtos.EventShortDto;
 import main.server.events.model.EventModel;
 
 import java.time.LocalDateTime;

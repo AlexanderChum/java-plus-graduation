@@ -1,4 +1,4 @@
-package main.server.events.dto;
+package ru.yandex.practicum.event.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;

@@ -1,4 +1,4 @@
-package main.server.events.dto;
+package ru.yandex.practicum.event.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.category.dtos.CategoryDto;
-import main.server.events.enums.EventState;
+import ru.yandex.practicum.event.enums.EventState;
 import ru.yandex.practicum.users.dtos.UserShortDto;
 import ru.yandex.practicum.location.dtos.LocationDto;
 

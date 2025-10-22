@@ -19,6 +19,7 @@
         <module>core/category-service</module>
         <module>core/interaction-api</module>
         <module>core/user-service</module>
+        <module>core/event-service</module>
     </modules>
 
     <groupId>ru.practicum</groupId>

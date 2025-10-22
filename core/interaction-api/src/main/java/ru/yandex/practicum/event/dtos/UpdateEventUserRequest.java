@@ -1,4 +1,4 @@
-package main.server.events.dto;
+package ru.yandex.practicum.event.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,7 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import main.server.events.enums.StateActionAdmin;
+import ru.yandex.practicum.event.enums.StateAction;
 import ru.yandex.practicum.location.dtos.LocationDto;
 
 import java.time.LocalDateTime;
@@ -18,11 +18,11 @@ import java.time.LocalDateTime;
 import static stat.constant.Const.DATE_TIME_FORMAT;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UpdateEventAdminRequest {
+@AllArgsConstructor
+@NoArgsConstructor
+public class UpdateEventUserRequest {
 
     @Size(min = 20, max = 2000, message = "Поле annotation должно быть от 20 до 2000 символов")
     String annotation;
@@ -43,11 +43,10 @@ public class UpdateEventAdminRequest {
     Boolean requestModeration;
 
     @JsonProperty("stateAction")
-    StateActionAdmin state;
+    StateAction state;
 
     @Size(min = 3, max = 120, message = "Поле title должно быть от 3 до 120 символов")
     String title;
 
-    @JsonProperty("location")
-    LocationDto locationDto;
+    LocationDto location;
 }

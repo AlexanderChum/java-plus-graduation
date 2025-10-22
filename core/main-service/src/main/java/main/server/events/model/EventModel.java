@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import main.server.category.model.Category;
-import main.server.events.enums.EventState;
+import ru.yandex.practicum.event.enums.EventState;
 import main.server.user.model.User;
 import org.hibernate.annotations.Formula;
 

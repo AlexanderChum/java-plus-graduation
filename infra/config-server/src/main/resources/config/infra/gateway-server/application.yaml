@@ -21,3 +21,11 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/admin/users/**
+        - id: event_service_route
+          uri: lb://event-service
+          predicates:
+            - Path=/admin/events/**,/users/{userId}/events/**,/events/**
+        - id: location_service_route
+          uri: lb://location-service
+          predicates:
+            - Path=//location/**

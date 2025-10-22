@@ -1,4 +1,4 @@
-package main.server.events.enums;
+package ru.yandex.practicum.event.enums;
 
 public enum EventState {
     PENDING,

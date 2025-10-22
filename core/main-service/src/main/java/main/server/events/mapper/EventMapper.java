@@ -2,9 +2,9 @@ package main.server.events.mapper;
 
 import main.server.category.mapper.CategoryMapper;
 import main.server.category.model.Category;
-import main.server.events.dto.EventFullDto;
-import main.server.events.dto.EventShortDto;
-import main.server.events.dto.NewEventDto;
+import ru.yandex.practicum.event.dtos.EventFullDto;
+import ru.yandex.practicum.event.dtos.EventShortDto;
+import ru.yandex.practicum.event.dtos.NewEventDto;
 import main.server.events.model.EventModel;
 import main.server.user.model.User;
 import org.mapstruct.Mapper;

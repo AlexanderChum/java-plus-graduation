@@ -73,3 +73,18 @@ services:
       timeout: 5s
       interval: 5s
       retries: 10
+
+  event-db:
+    image: postgres:16.1
+    container_name: event
+    ports:
+      - "6553:5432"
+    environment:
+      - POSTGRES_PASSWORD=event
+      - POSTGRES_USER=event
+      - POSTGRES_DB=event
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10

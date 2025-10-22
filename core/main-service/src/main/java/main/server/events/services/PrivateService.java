@@ -1,9 +1,9 @@
 package main.server.events.services;
 
-import main.server.events.dto.EventFullDto;
-import main.server.events.dto.EventShortDto;
-import main.server.events.dto.NewEventDto;
-import main.server.events.dto.UpdateEventUserRequest;
+import ru.yandex.practicum.event.dtos.EventFullDto;
+import ru.yandex.practicum.event.dtos.EventShortDto;
+import ru.yandex.practicum.event.dtos.NewEventDto;
+import ru.yandex.practicum.event.dtos.UpdateEventUserRequest;
 
 import java.util.List;
 

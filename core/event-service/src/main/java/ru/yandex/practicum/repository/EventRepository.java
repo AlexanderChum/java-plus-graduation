@@ -28,7 +28,7 @@ public interface EventRepository extends JpaRepository<EventModel, Long> {
                 FROM EventModel AS e
                 WHERE e.state = 'PUBLISHED'
                 AND (:text IS NULL OR e.annotation ILIKE %:text% OR e.description ILIKE %:text%)
-                AND (:categories IS NULL OR e.category.id IN :categories)
+                AND (:categories IS NULL OR e.categoryId IN :categories)
                 AND (:paid IS NULL OR e.paid = :paid)
                 AND (CAST(:rangeStart AS timestamp) IS NULL AND e.eventDate >= CURRENT_TIMESTAMP OR e.eventDate >=
                 :rangeStart)
@@ -47,9 +47,9 @@ public interface EventRepository extends JpaRepository<EventModel, Long> {
     @Query("""
                 SELECT e
                 FROM EventModel AS e
-                WHERE (:users IS NULL OR e.initiator.id IN :users)
+                WHERE (:users IS NULL OR e.initiatorId IN :users)
                 AND (:states IS NULL OR e.state IN :states)
-                AND (:categories IS NULL OR e.category.id IN :categories)
+                AND (:categories IS NULL OR e.categoryId IN :categories)
                 AND (CAST(:rangeStart AS timestamp) IS NULL OR e.eventDate >= :rangeStart)
                 AND (CAST(:rangeEnd AS timestamp) IS NULL OR e.eventDate < :rangeEnd)
             """)

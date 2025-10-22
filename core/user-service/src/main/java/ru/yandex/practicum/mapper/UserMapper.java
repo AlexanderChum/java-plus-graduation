@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import ru.yandex.practicum.model.User;
 import ru.yandex.practicum.users.dtos.NewUserDto;
 import ru.yandex.practicum.users.dtos.UserDto;
+import ru.yandex.practicum.users.dtos.UserShortDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +19,8 @@ public interface UserMapper {
     User toUser(NewUserDto newUserDto);
 
     UserDto toUserDto(User user);
+
+    UserShortDto toUserShortDto(User user);
 
     default Page<UserDto> toUserDtoPage(List<User> users, Pageable pageable) {
         List<UserDto> userDtos = users == null ? List.of() : users.stream()

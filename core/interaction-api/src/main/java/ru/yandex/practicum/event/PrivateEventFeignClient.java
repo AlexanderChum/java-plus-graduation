@@ -17,31 +17,23 @@ import ru.yandex.practicum.event.dtos.UpdateEventUserRequest;
 
 import java.util.List;
 
-@FeignClient(name = "event-service", path = "/users/{userId}/events")
+@FeignClient(name = "event-service", path = "/users")
 public interface PrivateEventFeignClient {
 
-    @GetMapping
-    List<EventShortDto> getUserEvents(@PathVariable
-                                      @Positive
-                                      Long userId,
+    @GetMapping("/{userId}/events")
+    List<EventShortDto> getUserEvents(@PathVariable @Positive Long userId,
+                                      @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
+                                      @RequestParam(defaultValue = "10") @Positive Integer size);
 
-                                      @RequestParam(defaultValue = "0")
-                                      @PositiveOrZero
-                                      Integer from,
-
-                                      @RequestParam(defaultValue = "10")
-                                      @Positive
-                                      Integer size);
-
-    @PostMapping
+    @PostMapping("/{userId}/events")
     EventFullDto createEvent(@Valid @RequestBody NewEventDto newEventDto,
                              @PathVariable @Positive Long userId);
 
-    @GetMapping("/{eventId}")
+    @GetMapping("/{userId}/events/{eventId}")
     EventFullDto getEventByEventIdAndUserId(@PathVariable @Positive Long userId,
                                             @PathVariable @Positive Long eventId);
 
-    @PatchMapping("/{eventId}")
+    @PatchMapping("/{userId}/events/{eventId}")
     EventFullDto updateEventByEventId(@PathVariable @Positive Long userId,
                                       @PathVariable @Positive Long eventId,
                                       @Valid @RequestBody UpdateEventUserRequest updateEventDto);

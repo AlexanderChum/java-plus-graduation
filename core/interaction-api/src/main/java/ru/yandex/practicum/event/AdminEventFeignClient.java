@@ -25,20 +25,20 @@ public interface AdminEventFeignClient {
                              @PathVariable @Positive Long eventId);
 
     @GetMapping
-    List<EventFullDto> getEvents(@RequestParam(required = false) List<Long> users,
-                                 @RequestParam(required = false) List<String> states,
-                                 @RequestParam(required = false) List<Long> categories,
+    List<EventFullDto> getEventsWithAdminFilters(@RequestParam(required = false) List<Long> users,
+                                                 @RequestParam(required = false) List<String> states,
+                                                 @RequestParam(required = false) List<Long> categories,
 
-                                 @RequestParam(required = false)
-                                 @DateTimeFormat(pattern = DATE_TIME_FORMAT)
-                                 LocalDateTime rangeStart,
+                                                 @RequestParam(required = false)
+                                                 @DateTimeFormat(pattern = DATE_TIME_FORMAT)
+                                                 LocalDateTime rangeStart,
 
-                                 @RequestParam(required = false)
-                                 @DateTimeFormat(pattern = DATE_TIME_FORMAT)
-                                 LocalDateTime rangeEnd,
+                                                 @RequestParam(required = false)
+                                                 @DateTimeFormat(pattern = DATE_TIME_FORMAT)
+                                                 LocalDateTime rangeEnd,
 
-                                 @RequestParam(defaultValue = "0") Integer from,
-                                 @RequestParam(defaultValue = "10") Integer size);
+                                                 @RequestParam(defaultValue = "0") Integer from,
+                                                 @RequestParam(defaultValue = "10") Integer size);
 
 
 }

@@ -15,6 +15,7 @@ import ru.yandex.practicum.service.UserService;
 import ru.yandex.practicum.users.UsersFeignClient;
 import ru.yandex.practicum.users.dtos.NewUserDto;
 import ru.yandex.practicum.users.dtos.UserDto;
+import ru.yandex.practicum.users.dtos.UserShortDto;
 
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class UserController implements UsersFeignClient {
 
     @Override
     @ResponseStatus(HttpStatus.OK)
-    public UserDto getUserById(Long userId) {
+    public UserShortDto getUserById(Long userId) {
         log.info("Запрос на получение пользователя по id");
         return service.getUserById(userId);
     }

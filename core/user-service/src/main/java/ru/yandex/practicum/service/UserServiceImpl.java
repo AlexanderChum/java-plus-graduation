@@ -16,6 +16,7 @@ import ru.yandex.practicum.model.User;
 import ru.yandex.practicum.repository.UserRepository;
 import ru.yandex.practicum.users.dtos.NewUserDto;
 import ru.yandex.practicum.users.dtos.UserDto;
+import ru.yandex.practicum.users.dtos.UserShortDto;
 
 import java.util.List;
 
@@ -60,9 +61,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserById(Long userId) {
+    public UserShortDto getUserById(Long userId) {
         log.info("Запрос в сервис на получение пользователя по id");
-        return mapper.toUserDto(validateUserExist(userId));
+        return mapper.toUserShortDto(validateUserExist(userId));
     }
 
     private void validateEmailExist(String email) {

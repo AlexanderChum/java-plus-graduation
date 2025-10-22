@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.yandex.practicum.users.dtos.NewUserDto;
 import ru.yandex.practicum.users.dtos.UserDto;
+import ru.yandex.practicum.users.dtos.UserShortDto;
 
 import java.util.List;
 
@@ -34,5 +35,5 @@ public interface UsersFeignClient {
     void deleteUser(@PathVariable Long userId);
 
     @GetMapping("/{userId}")
-    UserDto getUserById(@PathVariable Long userId);
+    UserShortDto getUserById(@PathVariable Long userId);
 }

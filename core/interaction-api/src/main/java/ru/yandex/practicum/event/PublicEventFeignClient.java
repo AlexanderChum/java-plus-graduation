@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.yandex.practicum.event.dtos.EventFullDto;
 import ru.yandex.practicum.event.dtos.EventShortDto;
 
 import java.time.LocalDateTime;
@@ -42,6 +43,6 @@ public interface PublicEventFeignClient {
                                   HttpServletRequest request);
 
     @GetMapping("/{eventId}")
-    EventShortDto getEventById(@PathVariable @Positive Long eventId,
-                               HttpServletRequest request);
+    EventFullDto getEventById(@PathVariable @Positive Long eventId,
+                              HttpServletRequest request);
 }

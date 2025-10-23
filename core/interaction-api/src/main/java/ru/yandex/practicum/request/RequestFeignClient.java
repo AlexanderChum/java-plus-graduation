@@ -12,7 +12,7 @@ import ru.yandex.practicum.request.dtos.ParticipationRequestDto;
 
 import java.util.List;
 
-@FeignClient(name = "request-service", path = "/users")
+@FeignClient(name = "request-service", contextId = "PrivateRequest", path = "/users")
 public interface RequestFeignClient {
 
     @GetMapping("/{userId}/requests")

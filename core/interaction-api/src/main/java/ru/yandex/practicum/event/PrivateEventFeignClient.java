@@ -17,7 +17,7 @@ import ru.yandex.practicum.event.dtos.UpdateEventUserRequest;
 
 import java.util.List;
 
-@FeignClient(name = "event-service", path = "/users")
+@FeignClient(name = "event-service", contextId = "PrivateEvent", path = "/users")
 public interface PrivateEventFeignClient {
 
     @GetMapping("/{userId}/events")

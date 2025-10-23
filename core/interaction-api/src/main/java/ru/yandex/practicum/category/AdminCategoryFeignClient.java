@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import ru.yandex.practicum.category.dtos.CategoryDto;
 import ru.yandex.practicum.category.dtos.NewCategoryDto;
 
-@FeignClient(name = "category-service", path = "/admin/categories")
+@FeignClient(name = "category-service", contextId = "AdminCategory", path = "/admin/categories")
 public interface AdminCategoryFeignClient {
 
     @PostMapping

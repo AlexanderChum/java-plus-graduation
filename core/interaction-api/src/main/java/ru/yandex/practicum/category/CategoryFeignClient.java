@@ -10,7 +10,7 @@ import ru.yandex.practicum.category.dtos.CategoryDto;
 
 import java.util.List;
 
-@FeignClient(name = "category-service", path = "/categories")
+@FeignClient(name = "category-service", contextId = "PublicCategory", path = "/categories")
 public interface CategoryFeignClient {
 
     @GetMapping

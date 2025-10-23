@@ -16,7 +16,7 @@ import java.util.List;
 
 import static stat.constant.Const.DATE_TIME_FORMAT;
 
-@FeignClient(name = "event-service", path = "/events")
+@FeignClient(name = "event-service", contextId = "PublicEvent", path = "/events")
 public interface PublicEventFeignClient {
 
     @GetMapping

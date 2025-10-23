@@ -17,7 +17,7 @@ import java.util.List;
 
 import static stat.constant.Const.DATE_TIME_FORMAT;
 
-@FeignClient(name = "event-service", path = "/admin/events")
+@FeignClient(name = "event-service", contextId = "AdminEvent", path = "/admin/events")
 public interface AdminEventFeignClient {
 
     @PatchMapping("/{eventId}")

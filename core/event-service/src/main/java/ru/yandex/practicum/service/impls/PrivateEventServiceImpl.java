@@ -129,6 +129,21 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         return result;
     }
 
+    @Transactional(readOnly = true)
+    public List<EventShortDto> findAllById(List<Long> eventIds) {
+        List<EventModel> events = repository.findAllById(eventIds);
+        Map<Long, Long> views = getAmountOfViews(events);
+        return events.stream()
+                .map(event -> {
+                    UserShortDto userDto = userClient.getUserById(event.getInitiatorId());
+                    CategoryDto categoryDto = categoryClient.getCategoryById(event.getCategoryId());
+                    EventShortDto dto = mapper.toShortDto(event, categoryDto, userDto);
+                    dto.setViews(views.getOrDefault(event.getId(), 0L));
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
     private void changeEventState(EventModel event, UpdateEventUserRequest update) {
         if (update.getState() != null) {
             if (update.getState() == StateAction.SEND_TO_REVIEW) event.setState(EventState.PENDING);

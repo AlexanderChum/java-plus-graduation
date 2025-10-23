@@ -21,7 +21,6 @@
         <module>core/user-service</module>
         <module>core/event-service</module>
         <module>core/request-service</module>
-        <module>core/compilation-service</module>
     </modules>
 
     <groupId>ru.practicum</groupId>

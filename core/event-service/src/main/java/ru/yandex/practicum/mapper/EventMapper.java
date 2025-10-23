@@ -12,8 +12,7 @@ import ru.yandex.practicum.model.EventModel;
 import ru.yandex.practicum.users.dtos.UserShortDto;
 
 @Mapper(componentModel = "spring",
-        unmappedTargetPolicy = ReportingPolicy.ERROR,
-        uses = {CategoryMapper.class, UserMapper.class, LocationMapper.class})
+        unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface EventMapper {
 
     @Mapping(target = "id", ignore = true)

@@ -13,4 +13,8 @@ public interface PublicEventService {
     List<EventShortDto> getEventsWithFilters(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
                                              LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Integer from,
                                              Integer size, HttpServletRequest request);
+
+    EventFullDto getEventByIdForRequest(Long eventId);
+
+    boolean checkInitiatorAndEventIds(Long eventId, Long userId);
 }

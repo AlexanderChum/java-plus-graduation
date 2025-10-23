@@ -45,4 +45,11 @@ public interface PublicEventFeignClient {
     @GetMapping("/{eventId}")
     EventFullDto getEventById(@PathVariable @Positive Long eventId,
                               HttpServletRequest request);
+
+    @GetMapping("/{eventId}/requests")
+    EventFullDto getEventForRequestService(@PathVariable @Positive Long eventId);
+
+    @GetMapping("{eventId}/request/{userId}")
+    boolean checkInitiatorAndEventIds(@PathVariable @Positive Long eventId,
+                                      @PathVariable @Positive Long userId);
 }

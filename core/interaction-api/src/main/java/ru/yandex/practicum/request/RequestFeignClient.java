@@ -1,4 +1,28 @@
 package ru.yandex.practicum.request;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.yandex.practicum.request.dtos.ParticipationRequestDto;
+
+import java.util.List;
+
+@FeignClient(name = "request-service", path = "/users")
 public interface RequestFeignClient {
+
+    @GetMapping("/{userId}/requests")
+    List<ParticipationRequestDto> getRequests(@PathVariable("userId") @NotNull @Positive Long requesterId);
+
+    @PostMapping("/{userId}/requests")
+    ParticipationRequestDto createRequest(@PathVariable("userId") @NotNull @Positive Long requesterId,
+                                          @RequestParam("eventId") @NotNull @Positive Long eventId);
+
+    @PatchMapping("/{userId}/requests/{requestId}/cancel")
+    ParticipationRequestDto cancelRequest(@PathVariable("userId") @NotNull @Positive Long requesterId,
+                                          @PathVariable("requestId") @NotNull @Positive Long requestId);
 }

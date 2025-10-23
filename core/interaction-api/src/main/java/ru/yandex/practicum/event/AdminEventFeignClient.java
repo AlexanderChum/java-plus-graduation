@@ -40,5 +40,4 @@ public interface AdminEventFeignClient {
                                                  @RequestParam(defaultValue = "0") Integer from,
                                                  @RequestParam(defaultValue = "10") Integer size);
 
-
 }

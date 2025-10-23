@@ -62,4 +62,16 @@ public class PublicEventController implements PublicEventFeignClient {
         log.info("Поступил запрос на получение события по id от ноунейма");
         return service.getEventById(eventId, request);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    public EventFullDto getEventForRequestService(Long eventId) {
+        log.info("Поступил запрос на получение события для реквеста");
+        return service.getEventByIdForRequest(eventId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    public boolean checkInitiatorAndEventIds(Long eventId, Long userId){
+        log.info("Поступил запрос для проверки id события и пользователя");
+        return service.checkInitiatorAndEventIds(eventId, userId);
+    }
 }

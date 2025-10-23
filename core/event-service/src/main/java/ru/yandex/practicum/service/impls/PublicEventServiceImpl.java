@@ -118,6 +118,31 @@ public class PublicEventServiceImpl implements PublicEventService {
         return result;
     }
 
+    public EventFullDto getEventByIdForRequest(Long eventId) {
+        log.debug("Получен запрос на получение события по id");
+        EventModel event = repository.findById(eventId)
+                .orElseThrow(() -> new NotFoundException(String.format("Событие с id= %d не было найдено", eventId)));
+
+        if (event.getState() != EventState.PUBLISHED) {
+            throw new NotFoundException(String.format("Событие с id= %d недоступно, так как не опубликовано", eventId));
+        }
+
+        log.debug("Собираем событие для ответа");
+        CategoryDto categoryDto = categoryClient.getCategoryById(event.getCategoryId());
+        UserShortDto userDto = usersClient.getUserById(event.getInitiatorId());
+        LocationDto locationDto = locationClient.getLocation(event.getLocationId());
+        EventFullDto result = mapper.toFullDto(event, categoryDto, userDto, locationDto);
+        Map<Long, Long> views = getAmountOfViews(List.of(event));
+        result.setViews(views.getOrDefault(event.getId(), 0L));
+
+        return result;
+    }
+
+    public boolean checkInitiatorAndEventIds(Long eventId, Long userId) {
+        log.info("Проверка для реквеста");
+        return repository.existsByIdAndInitiatorId(eventId, userId);
+    }
+
     private Map<Long, Long> getAmountOfViews(List<EventModel> events) {
         if (events == null || events.isEmpty()) {
             return Collections.emptyMap();

@@ -103,3 +103,18 @@ services:
       timeout: 5s
       interval: 5s
       retries: 10
+
+  compilation-db:
+    image: postgres:16.1
+    container_name: compilation
+    ports:
+      - "6555:5432"
+    environment:
+      - POSTGRES_PASSWORD=compilation
+      - POSTGRES_USER=compilation
+      - POSTGRES_DB=compilation
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10

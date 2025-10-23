@@ -20,6 +20,7 @@
         <module>core/interaction-api</module>
         <module>core/user-service</module>
         <module>core/event-service</module>
+        <module>core/request-service</module>
     </modules>
 
     <groupId>ru.practicum</groupId>

@@ -16,7 +16,7 @@ import ru.yandex.practicum.users.dtos.UserShortDto;
 
 import java.util.List;
 
-@FeignClient(name = "user-service", path = "/admin/users")
+@FeignClient(name = "user-service", contextId = "User", path = "/admin/users")
 public interface UsersFeignClient {
 
     @GetMapping

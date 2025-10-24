@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.yandex.practicum.location.dtos.LocationDto;
 
-@FeignClient(name = "location-service", path = "/categories")
+@FeignClient(name = "location-service", path = "/location")
 public interface LocationFeignClient {
 
     @PostMapping

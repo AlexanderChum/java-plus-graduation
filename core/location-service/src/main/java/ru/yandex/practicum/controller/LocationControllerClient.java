@@ -30,7 +30,7 @@ public class LocationControllerClient implements LocationFeignClient {
     @Override
     @ResponseStatus(HttpStatus.OK)
     public LocationDto getLocation(Long locationId) {
-        log.info("");
+        log.info("Получен запрос на получение локации");
         return service.getLocation(locationId);
     }
 }

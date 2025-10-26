@@ -24,10 +24,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class CategoryController implements CategoryFeignClient {
+public class CategoryController {
     CategoryService service;
 
-    @Override
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CategoryDto> getCategories(@PositiveOrZero
@@ -41,7 +40,6 @@ public class CategoryController implements CategoryFeignClient {
         return service.getCategories(from, size);
     }
 
-    @Override
     @GetMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.OK)
     public CategoryDto getCategoryById(@PathVariable Long categoryId) {

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.yandex.practicum.event.PrivateEventFeignClient;
 import ru.yandex.practicum.event.dtos.EventFullDto;
 import ru.yandex.practicum.event.dtos.EventShortDto;
 import ru.yandex.practicum.event.dtos.NewEventDto;
@@ -31,11 +30,10 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class PrivateEventController implements PrivateEventFeignClient {
+public class PrivateEventController {
     PrivateEventService service;
 
-    @Override
-    @GetMapping("/{userId}/events")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<EventShortDto> getUserEvents(@PathVariable @Positive Long userId,
                                              @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
@@ -44,8 +42,7 @@ public class PrivateEventController implements PrivateEventFeignClient {
         return service.getUserEvents(userId, from, size);
     }
 
-    @Override
-    @PostMapping("/{userId}/events")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EventFullDto createEvent(@Valid @RequestBody NewEventDto newEventDto,
                                     @PathVariable @Positive Long userId) {
@@ -53,8 +50,7 @@ public class PrivateEventController implements PrivateEventFeignClient {
         return service.createEvent(newEventDto, userId);
     }
 
-    @Override
-    @GetMapping("/{userId}/events/{eventId}")
+    @GetMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventByEventIdAndUserId(@PathVariable @Positive Long userId,
                                                    @PathVariable @Positive Long eventId) {
@@ -62,8 +58,7 @@ public class PrivateEventController implements PrivateEventFeignClient {
         return service.getEventByEventId(userId, eventId);
     }
 
-    @Override
-    @PatchMapping("/{userId}/events/{eventId}")
+    @PatchMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto updateEventByEventId(@PathVariable @Positive Long userId,
                                              @PathVariable @Positive Long eventId,

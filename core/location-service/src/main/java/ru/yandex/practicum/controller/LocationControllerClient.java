@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.yandex.practicum.location.LocationFeignClient;
 import ru.yandex.practicum.location.dtos.LocationDto;
 import ru.yandex.practicum.service.LocationService;
 
@@ -21,10 +20,9 @@ import ru.yandex.practicum.service.LocationService;
 @RequiredArgsConstructor
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class LocationControllerClient implements LocationFeignClient {
+public class LocationControllerClient {
     LocationService service;
 
-    @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public LocationDto createLocation(@RequestBody LocationDto dto) {
@@ -32,7 +30,6 @@ public class LocationControllerClient implements LocationFeignClient {
         return service.createLocation(dto);
     }
 
-    @Override
     @GetMapping("/{locationId}")
     @ResponseStatus(HttpStatus.OK)
     public LocationDto getLocation(@RequestParam Long locationId) {

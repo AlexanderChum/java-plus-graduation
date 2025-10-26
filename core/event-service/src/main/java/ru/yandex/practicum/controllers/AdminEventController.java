@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.yandex.practicum.event.AdminEventFeignClient;
 import ru.yandex.practicum.event.dtos.EventFullDto;
 import ru.yandex.practicum.event.dtos.UpdateEventAdminRequest;
 import ru.yandex.practicum.service.AdminEventService;
@@ -31,10 +30,9 @@ import static stat.constant.Const.DATE_TIME_FORMAT;
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AdminEventController implements AdminEventFeignClient {
+public class AdminEventController {
     AdminEventService service;
 
-    @Override
     @PatchMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto updateEvent(@Valid @RequestBody UpdateEventAdminRequest updateEventAdminRequest,
@@ -43,7 +41,6 @@ public class AdminEventController implements AdminEventFeignClient {
         return service.updateEvent(updateEventAdminRequest, eventId);
     }
 
-    @Override
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<EventFullDto> getEventsWithAdminFilters(@RequestParam(required = false) List<Long> users,

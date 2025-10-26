@@ -30,10 +30,9 @@ import static stat.constant.Const.DATE_TIME_FORMAT;
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class PublicEventController implements PublicEventFeignClient {
+public class PublicEventController {
     PublicEventService service;
 
-    @Override
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<EventShortDto> getEvents(@RequestParam(required = false) String text,
@@ -62,7 +61,6 @@ public class PublicEventController implements PublicEventFeignClient {
                 onlyAvailable, sort, from, size, request);
     }
 
-    @Override
     @GetMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventById(@PathVariable @Positive Long eventId,
@@ -71,7 +69,6 @@ public class PublicEventController implements PublicEventFeignClient {
         return service.getEventById(eventId, request);
     }
 
-    @Override
     @GetMapping("/{eventId}/requests")
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventForRequestService(@PathVariable @Positive Long eventId) {
@@ -79,7 +76,6 @@ public class PublicEventController implements PublicEventFeignClient {
         return service.getEventByIdForRequest(eventId);
     }
 
-    @Override
     @GetMapping("{eventId}/request/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public boolean checkInitiatorAndEventIds(@PathVariable @Positive Long eventId,

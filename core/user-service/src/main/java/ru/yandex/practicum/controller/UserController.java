@@ -1,5 +1,6 @@
 package ru.yandex.practicum.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AccessLevel;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,10 +30,9 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 @Slf4j
-public class UserController implements UsersFeignClient {
+public class UserController {
     UserService service;
 
-    @Override
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getUsers(@RequestParam(name = "ids", required = false) List<Long> userIds,
@@ -45,15 +46,13 @@ public class UserController implements UsersFeignClient {
         return service.getUsers(userIds, from, size);
     }
 
-    @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto createUser(NewUserDto userDto) {
+    public UserDto createUser(@Valid @RequestBody NewUserDto userDto) {
         log.info("Получен запрос на создание пользователя");
         return service.createUser(userDto);
     }
 
-    @Override
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long userId) {
@@ -61,7 +60,6 @@ public class UserController implements UsersFeignClient {
         service.deleteUser(userId);
     }
 
-    @Override
     @GetMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public UserShortDto getUserById(@PathVariable Long userId) {

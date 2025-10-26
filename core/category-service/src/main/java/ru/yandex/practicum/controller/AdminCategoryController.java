@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.yandex.practicum.category.AdminCategoryFeignClient;
 import ru.yandex.practicum.category.dtos.CategoryDto;
 import ru.yandex.practicum.category.dtos.NewCategoryDto;
 import ru.yandex.practicum.service.AdminCategoryService;
@@ -24,10 +23,9 @@ import ru.yandex.practicum.service.AdminCategoryService;
 @RequiredArgsConstructor
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AdminCategoryController implements AdminCategoryFeignClient {
+public class AdminCategoryController {
     AdminCategoryService service;
 
-    @Override
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryDto createNewCategory(@Valid @RequestBody NewCategoryDto categoryDto) {
@@ -35,7 +33,6 @@ public class AdminCategoryController implements AdminCategoryFeignClient {
         return service.createNewCategory(categoryDto);
     }
 
-    @Override
     @DeleteMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable Long categoryId) {
@@ -43,7 +40,6 @@ public class AdminCategoryController implements AdminCategoryFeignClient {
         service.deleteCategory(categoryId);
     }
 
-    @Override
     @PatchMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.OK)
     public CategoryDto updateCategory(@PathVariable Long categoryId, @Valid @RequestBody CategoryDto categoryDto) {

@@ -2,12 +2,15 @@ package ru.yandex.practicum.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -30,6 +33,8 @@ import static stat.constant.Const.DATE_TIME_FORMAT;
 public class PublicEventController implements PublicEventFeignClient {
     PublicEventService service;
 
+    @Override
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<EventShortDto> getEvents(@RequestParam(required = false) String text,
                                          @RequestParam(required = false) List<Long> categories,
@@ -57,20 +62,28 @@ public class PublicEventController implements PublicEventFeignClient {
                 onlyAvailable, sort, from, size, request);
     }
 
+    @Override
+    @GetMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
-    public EventFullDto getEventById(Long eventId, HttpServletRequest request) {
+    public EventFullDto getEventById(@PathVariable @Positive Long eventId,
+                                     HttpServletRequest request) {
         log.info("Поступил запрос на получение события по id от ноунейма");
         return service.getEventById(eventId, request);
     }
 
+    @Override
+    @GetMapping("/{eventId}/requests")
     @ResponseStatus(HttpStatus.OK)
-    public EventFullDto getEventForRequestService(Long eventId) {
+    public EventFullDto getEventForRequestService(@PathVariable @Positive Long eventId) {
         log.info("Поступил запрос на получение события для реквеста");
         return service.getEventByIdForRequest(eventId);
     }
 
+    @Override
+    @GetMapping("{eventId}/request/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public boolean checkInitiatorAndEventIds(Long eventId, Long userId){
+    public boolean checkInitiatorAndEventIds(@PathVariable @Positive Long eventId,
+                                             @PathVariable @Positive Long userId) {
         log.info("Поступил запрос для проверки id события и пользователя");
         return service.checkInitiatorAndEventIds(eventId, userId);
     }

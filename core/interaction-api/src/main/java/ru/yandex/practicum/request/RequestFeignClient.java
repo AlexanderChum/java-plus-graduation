@@ -16,13 +16,13 @@ import java.util.List;
 public interface RequestFeignClient {
 
     @GetMapping("/{userId}/requests")
-    List<ParticipationRequestDto> getRequests(@PathVariable("userId") @NotNull @Positive Long requesterId);
+    List<ParticipationRequestDto> getRequests(@PathVariable @NotNull @Positive Long userId);
 
     @PostMapping("/{userId}/requests")
-    ParticipationRequestDto createRequest(@PathVariable("userId") @NotNull @Positive Long requesterId,
+    ParticipationRequestDto createRequest(@PathVariable @NotNull @Positive Long userId,
                                           @RequestParam("eventId") @NotNull @Positive Long eventId);
 
     @PatchMapping("/{userId}/requests/{requestId}/cancel")
-    ParticipationRequestDto cancelRequest(@PathVariable("userId") @NotNull @Positive Long requesterId,
+    ParticipationRequestDto cancelRequest(@PathVariable @NotNull @Positive Long userId,
                                           @PathVariable("requestId") @NotNull @Positive Long requestId);
 }

@@ -1,5 +1,7 @@
 package ru.yandex.practicum.controller;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,7 +30,7 @@ public class RequestController implements RequestFeignClient {
     @Override
     @GetMapping("/users/{userId}/requests")
     @ResponseStatus(HttpStatus.OK)
-    public List<ParticipationRequestDto> getRequests(@PathVariable Long userId) {
+    public List<ParticipationRequestDto> getRequests(@PathVariable @NotNull @Positive Long userId) {
         log.info("Получаем запросы");
         return service.getRequests(userId);
     }
@@ -36,8 +38,8 @@ public class RequestController implements RequestFeignClient {
     @Override
     @PostMapping("/users/{userId}/requests")
     @ResponseStatus(HttpStatus.CREATED)
-    public ParticipationRequestDto createRequest(@PathVariable Long userId,
-                                                 @RequestParam Long eventId) {
+    public ParticipationRequestDto createRequest(@PathVariable @NotNull @Positive Long userId,
+                                                 @RequestParam("eventId") @NotNull @Positive Long eventId) {
         log.info("Создаем запрос id={}", userId);
         return service.createRequest(userId, eventId);
     }
@@ -45,8 +47,8 @@ public class RequestController implements RequestFeignClient {
     @Override
     @PatchMapping("/users/{userId}/requests/{requestId}/cancel")
     @ResponseStatus(HttpStatus.OK)
-    public ParticipationRequestDto cancelRequest(@PathVariable Long userId,
-                                                 @PathVariable Long requestId) {
+    public ParticipationRequestDto cancelRequest(@PathVariable @NotNull @Positive Long userId,
+                                                 @PathVariable("requestId") @NotNull @Positive Long requestId) {
         log.info("Отменяем запрос");
         return service.cancelRequest(userId, requestId);
     }

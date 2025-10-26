@@ -13,6 +13,6 @@ public interface LocationFeignClient {
     @PostMapping
     LocationDto createLocation(@RequestBody LocationDto dto);
 
-    @GetMapping
+    @GetMapping("/{locationId}")
     LocationDto getLocation(@RequestParam Long locationId);
 }

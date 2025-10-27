@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS event (
   event_date TIMESTAMP WITH TIME ZONE NOT NULL,
   paid BOOLEAN DEFAULT FALSE,
   participant_limit INTEGER DEFAULT 0,
+  confirmed_requests BIGINT DEFAULT 0,
   request_moderation BOOLEAN DEFAULT TRUE,
   title VARCHAR(120) NOT NULL,
   initiator_id BIGINT NOT NULL,

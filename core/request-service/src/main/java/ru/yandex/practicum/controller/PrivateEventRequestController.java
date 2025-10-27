@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.yandex.practicum.request.PrivateEventRequestFeignClient;
 import ru.yandex.practicum.request.dtos.EventRequestStatusUpdateRequestDto;
 import ru.yandex.practicum.request.dtos.EventRequestStatusUpdateResultDto;
 import ru.yandex.practicum.request.dtos.ParticipationRequestDto;
@@ -27,10 +26,9 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class PrivateEventRequestController implements PrivateEventRequestFeignClient {
+public class PrivateEventRequestController {
     RequestService service;
 
-    @Override
     @GetMapping("/requests")
     @ResponseStatus(HttpStatus.OK)
     public List<ParticipationRequestDto> getEventRequestsByOwner(@PathVariable @Positive Long userId,
@@ -39,7 +37,6 @@ public class PrivateEventRequestController implements PrivateEventRequestFeignCl
         return service.getCurrentUserEventRequests(userId, eventId);
     }
 
-    @Override
     @PatchMapping("/requests")
     @ResponseStatus(HttpStatus.OK)
     public EventRequestStatusUpdateResultDto updateEventRequest(@PathVariable @Positive Long userId,

@@ -8,8 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-@ComponentScan(basePackages = {"client"})
-@EnableFeignClients
+@ComponentScan(basePackages = {"client", "ru.yandex.practicum"})
+@EnableFeignClients(basePackages = "ru.yandex.practicum")
 public class EventServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(EventServiceApplication.class, args);

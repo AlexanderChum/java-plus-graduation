@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.yandex.practicum.request.RequestFeignClient;
 import ru.yandex.practicum.request.dtos.ParticipationRequestDto;
 import ru.yandex.practicum.service.RequestService;
 
@@ -24,10 +23,9 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class RequestController implements RequestFeignClient {
+public class RequestController {
     RequestService service;
 
-    @Override
     @GetMapping("/users/{userId}/requests")
     @ResponseStatus(HttpStatus.OK)
     public List<ParticipationRequestDto> getRequests(@PathVariable @NotNull @Positive Long userId) {
@@ -35,7 +33,6 @@ public class RequestController implements RequestFeignClient {
         return service.getRequests(userId);
     }
 
-    @Override
     @PostMapping("/users/{userId}/requests")
     @ResponseStatus(HttpStatus.CREATED)
     public ParticipationRequestDto createRequest(@PathVariable @NotNull @Positive Long userId,
@@ -44,7 +41,6 @@ public class RequestController implements RequestFeignClient {
         return service.createRequest(userId, eventId);
     }
 
-    @Override
     @PatchMapping("/users/{userId}/requests/{requestId}/cancel")
     @ResponseStatus(HttpStatus.OK)
     public ParticipationRequestDto cancelRequest(@PathVariable @NotNull @Positive Long userId,

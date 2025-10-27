@@ -52,8 +52,10 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         log.info("Запрос в сервис на обновление категории");
         Category category = repository.findById(categoryId)
                 .orElseThrow(() -> new NotFoundException("Категория с id " + categoryId + " не найдена"));
-        if (repository.existsByName(categoryDto.getName())) {
-            throw new ConflictException("Такое название категории уже существует");
+        if (!category.getName().equals(categoryDto.getName())) {
+            if (repository.existsByName(categoryDto.getName())) {
+                throw new ConflictException("Такое название категории уже существует");
+            }
         }
         mapper.updateCategoryFromDto(categoryDto, category);
         category = repository.save(category);

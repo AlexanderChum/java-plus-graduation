@@ -21,16 +21,3 @@ CREATE TABLE IF NOT EXISTS compilations (
     pinned BOOLEAN,
     title  varchar(50)
 );
-CREATE TABLE IF NOT EXISTS compilation_event (
-    compilation_id BIGINT NOT NULL,
-    event_id BIGINT NOT NULL,
-    PRIMARY KEY (compilation_id, event_id),
-    CONSTRAINT fk_compilation_event_compilations
-        FOREIGN KEY (compilation_id) REFERENCES compilations(id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    CONSTRAINT fk_compilation_event_event
-        FOREIGN KEY (event_id) REFERENCES event(id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
-);

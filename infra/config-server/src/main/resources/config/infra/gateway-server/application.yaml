@@ -26,7 +26,7 @@ spring:
         - id: event_service_route
           uri: lb://event-service
           predicates:
-            - Path=/admin/events/**,/users/*/events/**,/events/**,/compilations/**,admin/compilations/**
+            - Path=/admin/events/**,/users/*/events/**,/events/**,/compilations/**,/admin/compilations/**
 
         - id: location_service_route
           uri: lb://location-service

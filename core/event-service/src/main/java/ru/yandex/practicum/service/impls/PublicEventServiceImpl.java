@@ -143,6 +143,12 @@ public class PublicEventServiceImpl implements PublicEventService {
         return repository.existsByIdAndInitiatorId(eventId, userId);
     }
 
+    public boolean checkEventsByCategoryId(Long categoryId) {
+        log.info("Получение событий для сервиса категорий");
+        List<EventModel> events = repository.findAllByCategoryId(categoryId);
+        return !events.isEmpty();
+    }
+
     private Map<Long, Long> getAmountOfViews(List<EventModel> events) {
         if (events == null || events.isEmpty()) {
             return Collections.emptyMap();

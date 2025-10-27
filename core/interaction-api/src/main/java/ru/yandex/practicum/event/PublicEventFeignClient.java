@@ -15,4 +15,7 @@ public interface PublicEventFeignClient {
     @GetMapping("{eventId}/request/{userId}")
     boolean checkInitiatorAndEventIds(@PathVariable @Positive Long eventId,
                                       @PathVariable @Positive Long userId);
+
+    @GetMapping("/category/{categoryId}")
+    boolean checkEventsByCategoryId(@PathVariable @Positive Long categoryId);
 }

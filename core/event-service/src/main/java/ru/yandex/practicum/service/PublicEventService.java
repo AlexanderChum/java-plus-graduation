@@ -17,4 +17,6 @@ public interface PublicEventService {
     EventFullDto getEventByIdForRequest(Long eventId);
 
     boolean checkInitiatorAndEventIds(Long eventId, Long userId);
+
+    boolean checkEventsByCategoryId(Long categoryId);
 }

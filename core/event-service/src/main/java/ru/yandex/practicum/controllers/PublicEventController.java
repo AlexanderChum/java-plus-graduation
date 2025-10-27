@@ -83,4 +83,10 @@ public class PublicEventController {
         log.info("Поступил запрос для проверки id события и пользователя");
         return service.checkInitiatorAndEventIds(eventId, userId);
     }
+
+    @GetMapping("/category/{categoryId}")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean getEventsByCategoryId(@PathVariable Long categoryId) {
+        return service.checkEventsByCategoryId(categoryId);
+    }
 }

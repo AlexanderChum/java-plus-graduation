@@ -48,4 +48,11 @@ public class RequestController {
         log.info("Отменяем запрос");
         return service.cancelRequest(userId, requestId);
     }
+
+    @GetMapping("/users/requests/confirmed")
+    @ResponseStatus(HttpStatus.OK)
+    public Long getConfirmedRequests(@RequestParam Long eventId) {
+        log.info("Получаем подтвержденные запросы для события");
+        return service.getConfirmedRequests(eventId);
+    }
 }

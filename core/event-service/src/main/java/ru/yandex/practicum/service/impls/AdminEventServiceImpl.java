@@ -22,6 +22,7 @@ import ru.yandex.practicum.location.dtos.LocationDto;
 import ru.yandex.practicum.mapper.EventMapper;
 import ru.yandex.practicum.model.EventModel;
 import ru.yandex.practicum.repository.EventRepository;
+import ru.yandex.practicum.request.RequestFeignClient;
 import ru.yandex.practicum.service.AdminEventService;
 import ru.yandex.practicum.users.UsersFeignClient;
 import ru.yandex.practicum.users.dtos.UserShortDto;
@@ -48,6 +49,7 @@ public class AdminEventServiceImpl implements AdminEventService {
     CategoryFeignClient categoryClient;
     LocationFeignClient locationClient;
     UsersFeignClient userClient;
+    RequestFeignClient requestClient;
 
     @Transactional(readOnly = true)
     public List<EventFullDto> getEventsWithAdminFilters(List<Long> users, List<String> states, List<Long> categories,
@@ -70,6 +72,7 @@ public class AdminEventServiceImpl implements AdminEventService {
                     UserShortDto userDto = userClient.getUserById(eventModel.getInitiatorId());
                     LocationDto locationDto = locationClient.getLocation(eventModel.getLocationId());
                     EventFullDto eventFull = eventMapper.toFullDto(eventModel, categoryDto, userDto, locationDto);
+                    eventFull.setConfirmedRequests(requestClient.getConfirmedRequests(eventModel.getId()));
                     eventFull.setViews(views.get(eventFull.getId()));
                     return eventFull;
                 })

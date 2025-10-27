@@ -185,6 +185,12 @@ public class RequestServiceImpl implements RequestService {
         return result;
     }
 
+    @Override
+    public Long getConfirmedRequests(Long eventId) {
+        log.info("Получение подтвержденных запросов на участие в сервисе");
+        return requestRepository.countConfirmedRequestsByEventIds(eventId, RequestStatus.CONFIRMED);
+    }
+
     private RequestModel validateRequest(Long requesterId, Long eventId) {
         validateUserExist(requesterId);
         EventFullDto event = validateEventExist(eventId);

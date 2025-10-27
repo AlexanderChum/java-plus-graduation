@@ -18,4 +18,5 @@ public interface RequestService {
     EventRequestStatusUpdateResultDto updateParticipationRequestsStatus(Long initiatorId, Long eventId,
                                                                         EventRequestStatusUpdateRequestDto eventRequestStatusUpdateRequestDto);
 
+    Long getConfirmedRequests(Long eventId);
 }

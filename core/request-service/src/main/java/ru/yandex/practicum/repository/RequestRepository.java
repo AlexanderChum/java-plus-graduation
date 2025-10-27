@@ -24,11 +24,10 @@ public interface RequestRepository extends JpaRepository<RequestModel, Long> {
 
     List<RequestModel> findAllByIdIn(List<Long> requestIds);
 
-    @Query("SELECT r.eventId, COUNT(r)" +
+    @Query("SELECT COUNT(r)" +
             " FROM RequestModel r" +
-            " WHERE r.eventId IN :eventIds AND r.status = :status" +
-            " GROUP BY r.eventId")
-    List<Object[]> countConfirmedRequestsByEventIds(@Param("eventIds") List<Long> eventIds,
-                                                    @Param("status") RequestStatus status);
+            " WHERE r.eventId = :eventId AND r.status = :status")
+    Long countConfirmedRequestsByEventIds(@Param("eventId") Long eventIds,
+                                          @Param("status") RequestStatus status);
 
 }

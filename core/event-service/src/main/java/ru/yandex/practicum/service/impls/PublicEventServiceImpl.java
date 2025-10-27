@@ -123,9 +123,9 @@ public class PublicEventServiceImpl implements PublicEventService {
         EventModel event = repository.findById(eventId)
                 .orElseThrow(() -> new NotFoundException(String.format("Событие с id= %d не было найдено", eventId)));
 
-        if (event.getState() != EventState.PUBLISHED) {
-            throw new NotFoundException(String.format("Событие с id= %d недоступно, так как не опубликовано", eventId));
-        }
+        //if (event.getState() != EventState.PUBLISHED) {
+        //    throw new NotFoundException(String.format("Событие с id= %d недоступно, так как не опубликовано", eventId));
+        //}
 
         log.debug("Собираем событие для ответа");
         CategoryDto categoryDto = categoryClient.getCategoryById(event.getCategoryId());

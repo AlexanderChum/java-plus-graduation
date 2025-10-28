@@ -13,6 +13,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {EventMapper.class})
 public interface CompilationMapper {
 
+    @Mapping(target = "events", source = "events")
     CompilationDto toDto(Compilation compilation, List<EventShortDto> events);
 
     @Mapping(target = "id", ignore = true)

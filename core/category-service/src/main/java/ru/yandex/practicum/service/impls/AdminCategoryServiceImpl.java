@@ -58,7 +58,6 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
             }
         }
         mapper.updateCategoryFromDto(categoryDto, category);
-        category = repository.save(category);
         log.debug("Категория с id = {} успешно обновлена", category.getId());
         return mapper.toCategoryDto(category);
     }

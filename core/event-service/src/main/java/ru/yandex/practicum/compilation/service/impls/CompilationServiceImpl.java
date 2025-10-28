@@ -37,7 +37,7 @@ public class CompilationServiceImpl implements CompilationService {
 
     @Override
     public CompilationDto addCompilation(NewCompilationDto newCompilationDto) {
-        log.info("1");
+        log.info("Получение запроса на создание подборки в сервисе");
         Compilation compilation = mapper.toEntity(newCompilationDto);
 
         if (newCompilationDto.getPinned() == null) {
@@ -46,7 +46,7 @@ public class CompilationServiceImpl implements CompilationService {
             compilation.setPinned(newCompilationDto.getPinned());
         }
 
-        log.info("2");
+        log.info("Маппинг и проверка статуса пройдены");
 
         if (newCompilationDto.getEvents() != null && !newCompilationDto.getEvents().isEmpty()) {
             compilation.setEvents(newCompilationDto.getEvents().stream().toList());
@@ -54,7 +54,7 @@ public class CompilationServiceImpl implements CompilationService {
             compilation.setEvents(new ArrayList<>());
         }
 
-        log.info("3");
+        log.info("Добавление событий в подборку");
 
         List<EventShortDto> events = eventService.findAllById(compilation.getEvents());
         Compilation savedCompilation = repository.save(compilation);

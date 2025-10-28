@@ -75,7 +75,7 @@ public class CompilationServiceImpl implements CompilationService {
     public CompilationDto updateCompilation(Long compId, CompilationUpdateDto updateDto) {
         Compilation compilation = repository.findById(compId)
                 .orElseThrow(() -> new NotFoundException("Событие с id " + compId + " не найдено"));
-        if (updateDto.getTitle() != null) {
+        if (updateDto.getTitle() != null && !updateDto.getTitle().isBlank()) {
             compilation.setTitle(updateDto.getTitle());
         }
         if (updateDto.getPinned() != null) {

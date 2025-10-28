@@ -186,6 +186,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Long getConfirmedRequests(Long eventId) {
         log.info("Получение подтвержденных запросов на участие в сервисе");
         return requestRepository.countConfirmedRequestsByEventIds(eventId, RequestStatus.CONFIRMED);

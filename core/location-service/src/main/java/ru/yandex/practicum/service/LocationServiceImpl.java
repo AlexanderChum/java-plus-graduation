@@ -30,6 +30,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public LocationDto getLocation(Long locationId) {
         log.info("Запрос в сервис на получение локации");
         Location location = repository.findById(locationId)

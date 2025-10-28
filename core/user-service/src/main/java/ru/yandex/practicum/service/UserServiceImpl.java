@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserShortDto getUserById(Long userId) {
         log.info("Запрос в сервис на получение пользователя по id");
         return mapper.toUserShortDto(validateUserExist(userId));

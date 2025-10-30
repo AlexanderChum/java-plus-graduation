@@ -15,9 +15,9 @@ import java.util.Map;
 @Slf4j
 @FieldDefaults(makeFinal = true)
 public class AggregatorProducer {
-    public String bootstrapServers = "localhost:9092";
-    public String keySerializer = "org.apache.kafka.common.serialization.StringSerializer";
-    public String valueSerializer = "ru.yandex.practicum.serializers.AvroSerializer";
+    String bootstrapServers = "localhost:9092";
+    String keySerializer = "org.apache.kafka.common.serialization.StringSerializer";
+    String valueSerializer = "ru.yandex.practicum.serializers.AvroSerializer";
     public String similarityTopic = "stats.events-similarity.v1";
 
     @Bean

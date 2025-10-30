@@ -17,12 +17,12 @@ public interface CollectorMapper {
         if (actionType == null) {
             return null;
         }
-        switch (actionType) {
-            case ACTION_VIEW: return ActionTypeAvro.VIEW;
-            case ACTION_REGISTER: return ActionTypeAvro.REGISTER;
-            case ACTION_LIKE: return ActionTypeAvro.LIKE;
-            default: throw new IllegalArgumentException("Неизвестный тип действия: " + actionType);
-        }
+        return switch (actionType) {
+            case ACTION_VIEW -> ActionTypeAvro.VIEW;
+            case ACTION_REGISTER -> ActionTypeAvro.REGISTER;
+            case ACTION_LIKE -> ActionTypeAvro.LIKE;
+            default -> throw new IllegalArgumentException("Неизвестный тип действия: " + actionType);
+        };
     }
 
     default Instant mapTimestamp(Timestamp timestamp) {

@@ -56,7 +56,7 @@ public class AggregationStarter {
         } catch (WakeupException ignored) {
             log.error("Ошибка WakeupException");
         } catch (Exception e) {
-            log.error("Ошибка во время обработки событий от датчиков", e);
+            log.error("Ошибка во время обработки", e);
         } finally {
             try {
                 producer.flush();

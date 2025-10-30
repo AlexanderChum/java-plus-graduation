@@ -1,5 +1,6 @@
 package ru.yandex.practicum.kafkaFactories;
 
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -12,12 +13,13 @@ import java.util.Map;
 
 @Configuration
 @Slf4j
+@FieldDefaults(makeFinal = true)
 public class AggregatorConsumer {
-    public final String bootstrapServers = "localhost:9092";
-    public final String keyDeserializer = "org.apache.kafka.common.serialization.StringDeserializer";
-    public final String valueDeserializer = "ru.yandex.practicum.deserializers.UserActionDeserializer";
-    public final String clientGroup = "aggregator-group";
-    public final String actionTopic = "stats.user-actions.v1";
+    String bootstrapServers = "localhost:9092";
+    String keyDeserializer = "org.apache.kafka.common.serialization.StringDeserializer";
+    String valueDeserializer = "ru.yandex.practicum.deserializers.UserActionDeserializer";
+    String clientGroup = "aggregator-group";
+    public String actionTopic = "stats.user-actions.v1";
 
 
     @Bean

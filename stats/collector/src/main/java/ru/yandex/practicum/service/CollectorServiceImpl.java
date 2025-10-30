@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.ewm.stats.avro.UserActionAvro;
-import ru.yandex.practicum.grpc.message.action.UserActionProto;
+import ru.yandex.practicum.grpc.stats.action.UserActionProto;
 import ru.yandex.practicum.kafkaProducer.CollectorProducerConfig;
 import ru.yandex.practicum.mapper.CollectorMapper;
 

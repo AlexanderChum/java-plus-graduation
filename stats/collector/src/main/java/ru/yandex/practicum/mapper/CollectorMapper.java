@@ -4,8 +4,8 @@ import com.google.protobuf.Timestamp;
 import org.mapstruct.Mapper;
 import ru.yandex.practicum.ewm.stats.avro.ActionTypeAvro;
 import ru.yandex.practicum.ewm.stats.avro.UserActionAvro;
-import ru.yandex.practicum.grpc.message.action.ActionTypeProto;
-import ru.yandex.practicum.grpc.message.action.UserActionProto;
+import ru.yandex.practicum.grpc.stats.action.ActionTypeProto;
+import ru.yandex.practicum.grpc.stats.action.UserActionProto;
 
 import java.time.Instant;
 

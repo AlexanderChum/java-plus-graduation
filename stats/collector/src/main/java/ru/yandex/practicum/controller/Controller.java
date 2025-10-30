@@ -9,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
-import ru.yandex.practicum.grpc.message.action.UserActionProto;
-import ru.yandex.practicum.grpc.message.collector.UserActionControllerGrpc;
+import ru.yandex.practicum.grpc.stats.action.UserActionProto;
+import ru.yandex.practicum.grpc.stats.collector.UserActionControllerGrpc;
 import ru.yandex.practicum.service.CollectorService;
 
 @Slf4j

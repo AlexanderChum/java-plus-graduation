@@ -3,10 +3,10 @@ syntax = "proto3";
 import "messages/UserAction.proto";
 import "google/protobuf/empty.proto";
 
-package service.collector;
+package stats.service.collector;
 
 option java_multiple_files = true;
-option java_package = "ru.yandex.practicum.grpc.message.collector";
+option java_package = "ru.yandex.practicum.grpc.stats.collector";
 
 service UserActionController {
   rpc CollectUserAction (message.action.UserActionProto)

@@ -1,6 +1,7 @@
 package ru.yandex.practicum.service;
 
-import ru.yandex.practicum.grpc.message.action.UserActionProto;
+
+import ru.yandex.practicum.grpc.stats.action.UserActionProto;
 
 public interface CollectorService {
     void createUserAction(UserActionProto request);

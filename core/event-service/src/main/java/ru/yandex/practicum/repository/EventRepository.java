@@ -17,6 +17,8 @@ import java.util.Optional;
 public interface EventRepository extends JpaRepository<EventModel, Long> {
     boolean existsByIdAndInitiatorId(Long eventId, Long initiatorId);
 
+    List<EventModel> findAllByIdIn(List<Long> eventIds);
+
     List<EventModel> findAllByCategoryId(Long catId);
 
     Page<EventModel> findByInitiatorId(Long userId, PageRequest eventDate);

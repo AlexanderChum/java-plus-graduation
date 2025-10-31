@@ -55,4 +55,11 @@ public class RequestController {
         log.info("Получаем подтвержденные запросы для события");
         return service.getConfirmedRequests(eventId);
     }
+
+    @GetMapping("/confirmed/{eventId}/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    Boolean checkRegistration(@PathVariable Long eventId, @PathVariable Long userId) {
+        log.info("Проверка регистрации пользователя");
+        return service.checkRegistration(eventId, userId);
+    }
 }

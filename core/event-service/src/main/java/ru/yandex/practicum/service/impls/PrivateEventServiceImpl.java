@@ -1,6 +1,6 @@
 package ru.yandex.practicum.service.impls;
 
-import client.StatsClient;
+import client.AnalyzerClient;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,6 +21,7 @@ import ru.yandex.practicum.event.dtos.NewEventDto;
 import ru.yandex.practicum.event.dtos.UpdateEventUserRequest;
 import ru.yandex.practicum.event.enums.EventState;
 import ru.yandex.practicum.event.enums.StateAction;
+import ru.yandex.practicum.grpc.stats.eventPredictions.RecommendedEventProto;
 import ru.yandex.practicum.location.LocationFeignClient;
 import ru.yandex.practicum.location.dtos.LocationDto;
 import ru.yandex.practicum.mapper.EventMapper;
@@ -29,13 +30,9 @@ import ru.yandex.practicum.repository.EventRepository;
 import ru.yandex.practicum.service.PrivateEventService;
 import ru.yandex.practicum.users.UsersFeignClient;
 import ru.yandex.practicum.users.dtos.UserShortDto;
-import stat.dto.ViewStatsDto;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,10 +44,10 @@ public class PrivateEventServiceImpl implements PrivateEventService {
     EventMapper mapper;
     EventRepository repository;
 
-    StatsClient statsClient;
     UsersFeignClient userClient;
     CategoryFeignClient categoryClient;
     LocationFeignClient locationClient;
+    AnalyzerClient analyzerClient;
 
     public EventFullDto createEvent(NewEventDto newEvent, Long userId) {
         log.debug("Получен запрос на создание нового события");
@@ -86,7 +83,10 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         CategoryDto categoryDto = categoryClient.getCategoryById(event.getCategoryId());
         LocationDto locationDto = locationClient.getLocation(event.getLocationId());
         EventFullDto result = mapper.toFullDto(event, categoryDto, userDto, locationDto);
-        result.setViews(getAmountOfViews(List.of(event)).get(eventId));
+        result.setRating(analyzerClient.getInteractionsCount(List.of(event.getId()))
+                .map(RecommendedEventProto::getScore)
+                .findFirst()
+                .orElse(0.0));
         return result;
     }
 
@@ -100,13 +100,15 @@ public class PrivateEventServiceImpl implements PrivateEventService {
                 PageRequest.of(from / size, size, Sort.by("eventDate").descending())
         );
 
-        Map<Long, Long> views = getAmountOfViews(events.getContent());
         return events.getContent().stream()
                 .map(event -> {
                     UserShortDto userDto = userClient.getUserById(event.getInitiatorId());
                     CategoryDto categoryDto = categoryClient.getCategoryById(event.getCategoryId());
                     EventShortDto dto = mapper.toShortDto(event, categoryDto, userDto);
-                    dto.setViews(views.getOrDefault(event.getId(), 0L));
+                    dto.setRating(analyzerClient.getInteractionsCount(List.of(event.getId()))
+                            .map(RecommendedEventProto::getScore)
+                            .findFirst()
+                            .orElse(0.0));
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -125,20 +127,25 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         CategoryDto categoryDto = categoryClient.getCategoryById(event.getCategoryId());
         LocationDto locationDto = locationClient.getLocation(event.getLocationId());
         EventFullDto result = mapper.toFullDto(event, categoryDto, userDto, locationDto);
-        result.setViews(getAmountOfViews(List.of(event)).get(eventId));
+        result.setRating(analyzerClient.getInteractionsCount(List.of(event.getId()))
+                .map(RecommendedEventProto::getScore)
+                .findFirst()
+                .orElse(0.0));
         return result;
     }
 
     @Transactional(readOnly = true)
     public List<EventShortDto> findAllById(List<Long> eventIds) {
         List<EventModel> events = repository.findAllById(eventIds);
-        Map<Long, Long> views = getAmountOfViews(events);
         return events.stream()
                 .map(event -> {
                     UserShortDto userDto = userClient.getUserById(event.getInitiatorId());
                     CategoryDto categoryDto = categoryClient.getCategoryById(event.getCategoryId());
                     EventShortDto dto = mapper.toShortDto(event, categoryDto, userDto);
-                    dto.setViews(views.getOrDefault(event.getId(), 0L));
+                    dto.setRating(analyzerClient.getInteractionsCount(List.of(event.getId()))
+                            .map(RecommendedEventProto::getScore)
+                            .findFirst()
+                            .orElse(0.0));
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -191,39 +198,5 @@ public class PrivateEventServiceImpl implements PrivateEventService {
             LocationDto locationDto = locationClient.createLocation(update.getLocation());
             event.setLocationId(locationDto.getId());
         }
-    }
-
-    private Map<Long, Long> getAmountOfViews(List<EventModel> events) {
-        if (events == null || events.isEmpty()) {
-            return Collections.emptyMap();
-        }
-        List<String> uris = events.stream()
-                .map(event -> "/events/" + event.getId())
-                .distinct()
-                .collect(Collectors.toList());
-
-        LocalDateTime startTime = LocalDateTime.now().minusDays(1);
-        LocalDateTime endTime = LocalDateTime.now().plusMinutes(5);
-
-        Map<Long, Long> viewsMap = new HashMap<>();
-        try {
-            log.debug("Получение статистики по времени для URI: {} с {} по {}", uris, startTime, endTime);
-            List<ViewStatsDto> stats = statsClient.getStatistics(
-                    startTime,
-                    endTime,
-                    uris,
-                    true
-            );
-            log.debug("Получение статистики");
-            if (stats != null && !stats.isEmpty()) {
-                for (ViewStatsDto stat : stats) {
-                    Long eventId = Long.parseLong(stat.getUri().substring("/events/".length()));
-                    viewsMap.put(eventId, stat.getHits());
-                }
-            }
-        } catch (Exception e) {
-            log.error("Не удалось получить статистику");
-        }
-        return viewsMap;
     }
 }

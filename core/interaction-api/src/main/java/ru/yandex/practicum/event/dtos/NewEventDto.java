@@ -17,8 +17,6 @@ import ru.yandex.practicum.location.dtos.LocationDto;
 
 import java.time.LocalDateTime;
 
-import static stat.constant.Const.DATE_TIME_FORMAT;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,7 +35,7 @@ public class NewEventDto {
     @NotBlank(message = "Поле description не может быть пустым")
     String description;
 
-    @JsonFormat(pattern = DATE_TIME_FORMAT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "Поле eventDate не может быть пустым")
     @Future(message = "Поле eventDate должно быть в будущем")
     LocalDateTime eventDate;

@@ -19,4 +19,6 @@ public interface RequestService {
                                                                         EventRequestStatusUpdateRequestDto eventRequestStatusUpdateRequestDto);
 
     Long getConfirmedRequests(Long eventId);
+
+    Boolean checkRegistration(Long eventId, Long userId);
 }

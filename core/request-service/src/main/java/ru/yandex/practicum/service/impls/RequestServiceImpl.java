@@ -1,5 +1,6 @@
 package ru.yandex.practicum.service.impls;
 
+import client.CollectorClient;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,11 +25,13 @@ import ru.yandex.practicum.service.RequestService;
 import ru.yandex.practicum.users.UsersFeignClient;
 import ru.yandex.practicum.users.dtos.UserShortDto;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -43,6 +46,7 @@ public class RequestServiceImpl implements RequestService {
 
     PublicEventFeignClient eventClient;
     UsersFeignClient userClient;
+    CollectorClient collectorClient;
 
     @Transactional(readOnly = true)
     @Override
@@ -58,6 +62,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public ParticipationRequestDto createRequest(Long requesterId, Long eventId) {
+        collectorClient.collectUserAction(requesterId, eventId, "ACTION_REGISTER", Instant.now());
         return mapper.toParticipationRequestDto(requestRepository.save(validateRequest(requesterId, eventId)));
     }
 
@@ -190,6 +195,14 @@ public class RequestServiceImpl implements RequestService {
     public Long getConfirmedRequests(Long eventId) {
         log.info("Получение подтвержденных запросов на участие в сервисе");
         return requestRepository.countConfirmedRequestsByEventIds(eventId, RequestStatus.CONFIRMED);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Boolean checkRegistration(Long eventId, Long userId) {
+        log.info("Запрос в сервис для проверки регистрации");
+        Optional<RequestModel> request = requestRepository.findByEventIdAndRequesterId(eventId, userId);
+        return request.isPresent();
     }
 
     private RequestModel validateRequest(Long requesterId, Long eventId) {

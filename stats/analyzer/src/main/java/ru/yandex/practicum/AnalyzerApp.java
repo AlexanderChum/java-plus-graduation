@@ -19,7 +19,7 @@ public class AnalyzerApp {
         UserActionProcessor userActionProcessor = context.getBean(UserActionProcessor.class);
 
         Thread userActionsThread = new Thread(userActionProcessor);
-        userActionsThread.setName("HubEventHandlerThread");
+        userActionsThread.setName("UserActionHandlerThread");
         userActionsThread.start();
 
         similarityProcessor.run();

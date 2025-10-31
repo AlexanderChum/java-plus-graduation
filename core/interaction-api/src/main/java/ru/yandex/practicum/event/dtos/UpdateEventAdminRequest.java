@@ -15,8 +15,6 @@ import ru.yandex.practicum.location.dtos.LocationDto;
 
 import java.time.LocalDateTime;
 
-import static stat.constant.Const.DATE_TIME_FORMAT;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,7 +30,7 @@ public class UpdateEventAdminRequest {
     @Size(min = 20, max = 7000, message = "Поле description должно быть от 20 до 7000 символов")
     String description;
 
-    @JsonFormat(pattern = DATE_TIME_FORMAT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime eventDate;
 
     Boolean paid;

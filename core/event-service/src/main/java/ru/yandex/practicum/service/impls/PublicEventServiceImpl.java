@@ -2,7 +2,6 @@ package ru.yandex.practicum.service.impls;
 
 import client.AnalyzerClient;
 import client.CollectorClient;
-import client.StatsClient;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -28,16 +27,11 @@ import ru.yandex.practicum.request.RequestFeignClient;
 import ru.yandex.practicum.service.PublicEventService;
 import ru.yandex.practicum.users.UsersFeignClient;
 import ru.yandex.practicum.users.dtos.UserShortDto;
-import stat.dto.EndpointHitDto;
-import stat.dto.ViewStatsDto;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service

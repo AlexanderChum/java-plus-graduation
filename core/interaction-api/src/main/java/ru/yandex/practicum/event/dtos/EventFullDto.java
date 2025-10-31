@@ -15,8 +15,6 @@ import ru.yandex.practicum.location.dtos.LocationDto;
 
 import java.time.LocalDateTime;
 
-import static stat.constant.Const.DATE_TIME_FORMAT;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -31,12 +29,12 @@ public class EventFullDto {
 
     Long confirmedRequests;
 
-    @JsonFormat(pattern = DATE_TIME_FORMAT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime createdOn;
 
     String description;
 
-    @JsonFormat(pattern = DATE_TIME_FORMAT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime eventDate;
 
     UserShortDto initiator;
@@ -47,7 +45,7 @@ public class EventFullDto {
     Boolean paid;
     Long participantLimit;
 
-    @JsonFormat(pattern = DATE_TIME_FORMAT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime publishedOn;
     Boolean requestModeration;
     EventState state;

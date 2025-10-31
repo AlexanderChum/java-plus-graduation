@@ -24,8 +24,6 @@ import ru.yandex.practicum.service.PublicEventService;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static stat.constant.Const.DATE_TIME_FORMAT;
-
 @RestController
 @RequestMapping("/events")
 @Slf4j
@@ -41,11 +39,11 @@ public class PublicEventController {
                                          @RequestParam(required = false) Boolean paid,
 
                                          @RequestParam(required = false)
-                                         @DateTimeFormat(pattern = DATE_TIME_FORMAT)
+                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
                                          LocalDateTime rangeStart,
 
                                          @RequestParam(required = false)
-                                         @DateTimeFormat(pattern = DATE_TIME_FORMAT)
+                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
                                          LocalDateTime rangeEnd,
 
                                          @RequestParam(defaultValue = "false") Boolean onlyAvailable,

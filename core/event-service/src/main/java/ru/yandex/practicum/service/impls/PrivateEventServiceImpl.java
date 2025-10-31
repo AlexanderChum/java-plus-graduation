@@ -1,7 +1,6 @@
 package ru.yandex.practicum.service.impls;
 
 import client.AnalyzerClient;
-import client.StatsClient;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -31,13 +30,9 @@ import ru.yandex.practicum.repository.EventRepository;
 import ru.yandex.practicum.service.PrivateEventService;
 import ru.yandex.practicum.users.UsersFeignClient;
 import ru.yandex.practicum.users.dtos.UserShortDto;
-import stat.dto.ViewStatsDto;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service

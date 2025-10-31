@@ -11,11 +11,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.yandex.practicum.event.PublicEventFeignClient;
 import ru.yandex.practicum.event.dtos.EventFullDto;
 import ru.yandex.practicum.event.dtos.EventShortDto;
 import ru.yandex.practicum.service.PublicEventService;
@@ -64,9 +65,10 @@ public class PublicEventController {
     @GetMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventById(@PathVariable @Positive Long eventId,
-                                     HttpServletRequest request) {
-        log.info("Поступил запрос на получение события по id от ноунейма");
-        return service.getEventById(eventId, request);
+                                     HttpServletRequest request,
+                                     @RequestHeader("X-EWM-USER-ID") Long userId) {
+        log.info("Поступил запрос на получение события по id от теперь уже пользователя");
+        return service.getEventById(eventId, request, userId);
     }
 
     @GetMapping("/{eventId}/requests")
@@ -88,5 +90,18 @@ public class PublicEventController {
     @ResponseStatus(HttpStatus.OK)
     public boolean getEventsByCategoryId(@PathVariable Long categoryId) {
         return service.checkEventsByCategoryId(categoryId);
+    }
+
+    @GetMapping("/recommendations")
+    public List<EventShortDto> getRecommendations(@RequestParam Long max,
+                                                  @RequestHeader("X-EWM-USER-ID") Long userId) {
+        log.info("Поступил запрос на получение рекомендаций");
+        return service.getRecommendation(userId, max);
+    }
+
+    @PutMapping("/{eventId}/like")
+    public void likeEvent(@PathVariable Long eventId, @RequestHeader("X-EWM-USER-ID") Long userId) {
+        log.info("Получен запрос на лайк для события");
+        service.addLike(eventId, userId);
     }
 }

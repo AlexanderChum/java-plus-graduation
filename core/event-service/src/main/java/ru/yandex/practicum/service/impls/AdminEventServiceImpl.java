@@ -1,5 +1,7 @@
 package ru.yandex.practicum.service.impls;
 
+import client.AnalyzerClient;
+import client.CollectorClient;
 import client.StatsClient;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import ru.yandex.practicum.event.dtos.EventFullDto;
 import ru.yandex.practicum.event.dtos.UpdateEventAdminRequest;
 import ru.yandex.practicum.event.enums.EventState;
 import ru.yandex.practicum.event.enums.StateActionAdmin;
+import ru.yandex.practicum.grpc.stats.eventPredictions.RecommendedEventProto;
 import ru.yandex.practicum.location.LocationFeignClient;
 import ru.yandex.practicum.location.dtos.LocationDto;
 import ru.yandex.practicum.mapper.EventMapper;
@@ -45,11 +48,11 @@ public class AdminEventServiceImpl implements AdminEventService {
     EventMapper eventMapper;
     EventRepository repository;
 
-    StatsClient statsClient;
     CategoryFeignClient categoryClient;
     LocationFeignClient locationClient;
     UsersFeignClient userClient;
     RequestFeignClient requestClient;
+    AnalyzerClient analyzerClient;
 
     @Transactional(readOnly = true)
     public List<EventFullDto> getEventsWithAdminFilters(List<Long> users, List<String> states, List<Long> categories,
@@ -63,8 +66,6 @@ public class AdminEventServiceImpl implements AdminEventService {
         List<EventModel> events = repository.findAllByFiltersAdmin(users, states, categories, rangeStart, rangeEnd,
                 PageRequest.of(from, size));
 
-        Map<Long, Long> views = getAmountOfViews(events);
-
         log.debug("Собираем событие для ответа");
         return events.stream()
                 .map(eventModel -> {
@@ -73,44 +74,13 @@ public class AdminEventServiceImpl implements AdminEventService {
                     LocationDto locationDto = locationClient.getLocation(eventModel.getLocationId());
                     EventFullDto eventFull = eventMapper.toFullDto(eventModel, categoryDto, userDto, locationDto);
                     eventFull.setConfirmedRequests(requestClient.getConfirmedRequests(eventModel.getId()));
-                    eventFull.setViews(views.get(eventFull.getId()));
+                    eventFull.setRating(analyzerClient.getInteractionsCount(List.of(eventModel.getId()))
+                            .map(RecommendedEventProto::getScore)
+                            .findFirst()
+                            .orElse(0.0));
                     return eventFull;
                 })
                 .collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    private Map<Long, Long> getAmountOfViews(List<EventModel> events) {
-        if (events == null || events.isEmpty()) {
-            return Collections.emptyMap();
-        }
-        List<String> uris = events.stream()
-                .map(event -> "/events/" + event.getId())
-                .distinct()
-                .collect(Collectors.toList());
-
-        LocalDateTime startTime = LocalDateTime.now().minusDays(1);
-        LocalDateTime endTime = LocalDateTime.now().plusMinutes(5);
-
-        Map<Long, Long> viewsMap = new HashMap<>();
-        try {
-            log.debug("Получение статистики по времени для URI: {} с {} по {}", uris, startTime, endTime);
-            List<ViewStatsDto> stats = statsClient.getStatistics(
-                    startTime,
-                    endTime,
-                    uris,
-                    true
-            );
-            log.debug("Получение статистики");
-            if (stats != null && !stats.isEmpty()) {
-                for (ViewStatsDto stat : stats) {
-                    Long eventId = Long.parseLong(stat.getUri().substring("/events/".length()));
-                    viewsMap.put(eventId, stat.getHits());
-                }
-            }
-        } catch (Exception e) {
-            log.error("Не удалось получить статистику");
-        }
-        return viewsMap;
     }
 
     public EventFullDto updateEvent(UpdateEventAdminRequest updateRequest, Long eventId) {
@@ -131,7 +101,10 @@ public class AdminEventServiceImpl implements AdminEventService {
         UserShortDto userDto = userClient.getUserById(event.getInitiatorId());
         LocationDto locationDto = locationClient.getLocation(event.getLocationId());
         EventFullDto result = eventMapper.toFullDto(event, categoryDto, userDto, locationDto);
-        result.setViews(getAmountOfViews(List.of(event)).get(eventId));
+        result.setRating(analyzerClient.getInteractionsCount(List.of(event.getId()))
+                .map(RecommendedEventProto::getScore)
+                .findFirst()
+                .orElse(0.0));
 
         return result;
     }

@@ -30,11 +30,13 @@ public class UserActionServiceImpl implements UserActionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserAction> getMaxWeighted(List<Long> eventIds) {
         return findMaxWeightedForEvents(eventIds);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserAction> getByUser(Long userId) {
         return repository.findAllByUserId(userId);
     }

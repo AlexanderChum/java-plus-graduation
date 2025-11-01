@@ -18,7 +18,7 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
         <grpc-client.version>3.1.0.RELEASE</grpc-client.version>
-        <avro-proto-schemas.version>0.0.1-SNAPSHOT</avro-proto-schemas.version>
+        <my-modules.version>0.0.1-SNAPSHOT</my-modules.version>
         <spring-boot-maven-plugin.version>3.3.2</spring-boot-maven-plugin.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     </properties>
@@ -73,12 +73,17 @@
         <dependency>
             <groupId>ru.practicum</groupId>
             <artifactId>avro-schemas</artifactId>
-            <version>${avro-proto-schemas.version}</version>
+            <version>${my-modules.version}</version>
         </dependency>
         <dependency>
             <groupId>ru.practicum</groupId>
             <artifactId>proto-schemas</artifactId>
-            <version>${avro-proto-schemas.version}</version>
+            <version>${my-modules.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.practicum</groupId>
+            <artifactId>constants</artifactId>
+            <version>${my-modules.version}</version>
         </dependency>
         <dependency>
             <groupId>net.devh</groupId>

@@ -16,21 +16,31 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <interaction-api.version>0.0.1-SNAPSHOT</interaction-api.version>
+        <my-modules.version>0.0.1-SNAPSHOT</my-modules.version>
         <grpc-client.version>3.1.0.RELEASE</grpc-client.version>
     </properties>
 
     <dependencies>
+        <!-- My other modules dependencies-->
         <dependency>
             <groupId>ru.practicum</groupId>
             <artifactId>interaction-api</artifactId>
-            <version>${interaction-api.version}</version>
+            <version>${my-modules.version}</version>
         </dependency>
-
         <dependency>
             <groupId>ru.practicum</groupId>
             <artifactId>stats-client</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${my-modules.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.practicum</groupId>
+            <artifactId>constants</artifactId>
+            <version>${my-modules.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.practicum</groupId>
+            <artifactId>proto-schemas</artifactId>
+            <version>${my-modules.version}</version>
         </dependency>
 
         <dependency>
@@ -71,12 +81,6 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>ru.practicum</groupId>
-            <artifactId>proto-schemas</artifactId>
-            <version>${interaction-api.version}</version>
         </dependency>
 
         <dependency>

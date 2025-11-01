@@ -24,6 +24,9 @@ import ru.yandex.practicum.service.PublicEventService;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static ru.practicum.Constants.DATE_TIME_FORMAT;
+import static ru.practicum.Constants.USER_HEADER;
+
 @RestController
 @RequestMapping("/events")
 @Slf4j
@@ -39,11 +42,11 @@ public class PublicEventController {
                                          @RequestParam(required = false) Boolean paid,
 
                                          @RequestParam(required = false)
-                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                         @DateTimeFormat(pattern = DATE_TIME_FORMAT)
                                          LocalDateTime rangeStart,
 
                                          @RequestParam(required = false)
-                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                         @DateTimeFormat(pattern = DATE_TIME_FORMAT)
                                          LocalDateTime rangeEnd,
 
                                          @RequestParam(defaultValue = "false") Boolean onlyAvailable,
@@ -64,7 +67,7 @@ public class PublicEventController {
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto getEventById(@PathVariable @Positive Long eventId,
                                      HttpServletRequest request,
-                                     @RequestHeader("X-EWM-USER-ID") Long userId) {
+                                     @RequestHeader(USER_HEADER) Long userId) {
         log.info("Поступил запрос на получение события по id от теперь уже пользователя");
         return service.getEventById(eventId, request, userId);
     }
@@ -92,13 +95,13 @@ public class PublicEventController {
 
     @GetMapping("/recommendations")
     public List<EventShortDto> getRecommendations(@RequestParam Long max,
-                                                  @RequestHeader("X-EWM-USER-ID") Long userId) {
+                                                  @RequestHeader(USER_HEADER) Long userId) {
         log.info("Поступил запрос на получение рекомендаций");
         return service.getRecommendation(userId, max);
     }
 
     @PutMapping("/{eventId}/like")
-    public void likeEvent(@PathVariable Long eventId, @RequestHeader("X-EWM-USER-ID") Long userId) {
+    public void likeEvent(@PathVariable Long eventId, @RequestHeader(USER_HEADER) Long userId) {
         log.info("Получен запрос на лайк для события");
         service.addLike(eventId, userId);
     }

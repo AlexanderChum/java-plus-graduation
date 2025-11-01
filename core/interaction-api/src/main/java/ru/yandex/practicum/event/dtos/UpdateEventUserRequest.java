@@ -15,6 +15,8 @@ import ru.yandex.practicum.location.dtos.LocationDto;
 
 import java.time.LocalDateTime;
 
+import static ru.practicum.Constants.DATE_TIME_FORMAT;
+
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -30,7 +32,7 @@ public class UpdateEventUserRequest {
     @Size(min = 20, max = 7000, message = "Поле description должно быть от 20 до 7000 символов")
     String description;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = DATE_TIME_FORMAT)
     LocalDateTime eventDate;
 
     Boolean paid;

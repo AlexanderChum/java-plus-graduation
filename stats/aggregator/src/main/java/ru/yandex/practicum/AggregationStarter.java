@@ -19,6 +19,9 @@ import ru.yandex.practicum.service.AggregationService;
 import java.time.Duration;
 import java.util.List;
 
+import static ru.practicum.Constants.SIMILARITY_TOPIC;
+import static ru.practicum.Constants.USER_ACTION_TOPIC;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -34,7 +37,7 @@ public class AggregationStarter {
 
         try {
             log.info("Попытка подписаться на топик действий");
-            consumer.subscribe(List.of(consumerFactory.actionTopic));
+            consumer.subscribe(List.of(USER_ACTION_TOPIC));
 
             while (true) {
                 ConsumerRecords<String, SpecificRecordBase> records = consumer.poll(Duration.ofSeconds(1));
@@ -43,7 +46,7 @@ public class AggregationStarter {
                     try {
                         UserActionAvro request = (UserActionAvro) record.value();
                         service.calculateSimilarity(request).forEach(result -> {
-                            producer.send(new ProducerRecord<>(producerFactory.similarityTopic, result));
+                            producer.send(new ProducerRecord<>(SIMILARITY_TOPIC, result));
                         });
                     } catch (Exception e) {
                         log.error("Ошибка обработки записи", e);

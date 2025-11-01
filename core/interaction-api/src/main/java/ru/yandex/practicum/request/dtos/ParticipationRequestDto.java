@@ -11,6 +11,8 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
+import static ru.practicum.Constants.DATE_TIME_FORMAT_MILLI;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +21,7 @@ import java.time.LocalDateTime;
 public class ParticipationRequestDto {
     Long id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_FORMAT_MILLI)
     LocalDateTime created;
 
     @JsonProperty("event")

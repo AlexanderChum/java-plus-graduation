@@ -23,6 +23,8 @@ import ru.yandex.practicum.service.AdminEventService;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static ru.practicum.Constants.DATE_TIME_FORMAT;
+
 @RestController
 @RequestMapping("/admin/events")
 @Slf4j
@@ -46,11 +48,11 @@ public class AdminEventController {
                                                         @RequestParam(required = false) List<Long> categories,
 
                                                         @RequestParam(required = false)
-                                                        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                                        @DateTimeFormat(pattern = DATE_TIME_FORMAT)
                                                         LocalDateTime rangeStart,
 
                                                         @RequestParam(required = false)
-                                                        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                                        @DateTimeFormat(pattern = DATE_TIME_FORMAT)
                                                         LocalDateTime rangeEnd,
 
                                                         @RequestParam(defaultValue = "0") Integer from,

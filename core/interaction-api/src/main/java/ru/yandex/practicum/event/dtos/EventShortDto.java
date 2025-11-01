@@ -12,6 +12,8 @@ import ru.yandex.practicum.users.dtos.UserShortDto;
 
 import java.time.LocalDateTime;
 
+import static ru.practicum.Constants.DATE_TIME_FORMAT;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +25,7 @@ public class EventShortDto {
     CategoryDto category;
     Long confirmedRequests;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = DATE_TIME_FORMAT)
     LocalDateTime eventDate;
 
     UserShortDto initiator;

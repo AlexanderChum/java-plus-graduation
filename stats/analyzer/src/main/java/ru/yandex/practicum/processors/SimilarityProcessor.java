@@ -16,6 +16,9 @@ import ru.yandex.practicum.service.SimilarityService;
 import java.time.Duration;
 import java.util.List;
 
+import static ru.practicum.Constants.POLL_INTERVAL;
+import static ru.practicum.Constants.SIMILARITY_TOPIC;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -29,11 +32,11 @@ public class SimilarityProcessor implements Runnable {
         KafkaConsumer<String, SpecificRecordBase> consumer = factory.createSimilarityConsumer();
 
         try {
-            consumer.subscribe(List.of(factory.similaritiesTopic));
+            consumer.subscribe(List.of(SIMILARITY_TOPIC));
 
             while (true) {
-                ConsumerRecords<String, SpecificRecordBase> records = consumer.poll(Duration.ofSeconds(1));
-                log.info("Получено {} записей из топика {}", records.count(), factory.similaritiesTopic);
+                ConsumerRecords<String, SpecificRecordBase> records = consumer.poll(Duration.ofSeconds(POLL_INTERVAL));
+                log.info("Получено {} записей из топика {}", records.count(), SIMILARITY_TOPIC);
 
                 records.forEach(record -> {
                     try {

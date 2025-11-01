@@ -30,6 +30,7 @@ public class RecommendationServiceImpl implements RecommendationsService {
     UserActionService userActionService;
     SimilarityService similarityService;
 
+    @Override
     public List<RecommendedEventProto> getRecommendationsForUser(UserPredictionsRequestProto request) {
         Map<Long, Double> seenEvents = getUserSeenEvents(request.getUserId());
         Map<Long, Double> similarEvents = findSimilarEvents(seenEvents.keySet());
@@ -38,6 +39,7 @@ public class RecommendationServiceImpl implements RecommendationsService {
         return buildRecommendations(scoredEvents);
     }
 
+    @Override
     public List<RecommendedEventProto> getSimilarEvents(SimilarEventsRequestProto request) {
         log.info("Поиск похожих событий с исключением уже просмотренных");
         Set<Long> seenEvents = getUserSeenEventIds(request.getUserId());
@@ -53,6 +55,7 @@ public class RecommendationServiceImpl implements RecommendationsService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<RecommendedEventProto> getInteractionsCount(InteractionsCountRequestProto request) {
         log.info("Рассчет веса взаимодействий с событиями");
         Map<Long, Double> eventWeights = userActionService.getMaxWeighted(request.getEventIdList())

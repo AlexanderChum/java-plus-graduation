@@ -11,6 +11,8 @@ import ru.yandex.practicum.grpc.stats.action.UserActionProto;
 import ru.yandex.practicum.kafkaProducer.CollectorProducerConfig;
 import ru.yandex.practicum.mapper.CollectorMapper;
 
+import static ru.practicum.Constants.USER_ACTION_TOPIC;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -23,7 +25,7 @@ public class CollectorServiceImpl implements CollectorService{
     @Override
     public void createUserAction(UserActionProto request) {
         UserActionAvro avro = mapper.mapToAvro(request);
-        kafkaTemplate.send(config.actionTopic, avro)
+        kafkaTemplate.send(USER_ACTION_TOPIC, avro)
                 .whenComplete((result, exception) -> {
                     if (exception == null) {
                         log.info("Действие успешно отправлено");

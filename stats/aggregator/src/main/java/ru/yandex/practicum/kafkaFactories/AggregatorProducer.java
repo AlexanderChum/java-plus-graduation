@@ -11,21 +11,21 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+import static ru.practicum.Constants.VALUE_SERIALIZER;
+import static ru.practicum.Constants.BOOTSTRAP_SERVER;
+import static ru.practicum.Constants.KEY_SERIALIZER;
+
 @Component
 @Slf4j
 @FieldDefaults(makeFinal = true)
 public class AggregatorProducer {
-    String bootstrapServers = "localhost:9092";
-    String keySerializer = "org.apache.kafka.common.serialization.StringSerializer";
-    String valueSerializer = "ru.yandex.practicum.serializers.AvroSerializer";
-    public String similarityTopic = "stats.events-similarity.v1";
 
     @Bean
     public KafkaProducer<String, SpecificRecordBase> createProducer() {
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer);
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVER);
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, KEY_SERIALIZER);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, VALUE_SERIALIZER);
 
         log.info("Создание продюсера для агрегатора");
         return new KafkaProducer<>(configProps);

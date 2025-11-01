@@ -16,6 +16,9 @@ import ru.yandex.practicum.service.UserActionService;
 import java.time.Duration;
 import java.util.List;
 
+import static ru.practicum.Constants.POLL_INTERVAL;
+import static ru.practicum.Constants.USER_ACTION_TOPIC;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -29,11 +32,11 @@ public class UserActionProcessor implements Runnable {
         KafkaConsumer<String, SpecificRecordBase> consumer = factory.createUserActionConsumer();
 
         try {
-            consumer.subscribe(List.of(factory.userActionTopic));
+            consumer.subscribe(List.of(USER_ACTION_TOPIC));
 
             while (true) {
-                ConsumerRecords<String, SpecificRecordBase> records = consumer.poll(Duration.ofSeconds(1));
-                log.info("Получено {} записей из топика {}", records.count(), factory.userActionTopic);
+                ConsumerRecords<String, SpecificRecordBase> records = consumer.poll(Duration.ofSeconds(POLL_INTERVAL));
+                log.info("Получено {} записей из топика {}", records.count(), USER_ACTION_TOPIC);
 
                 records.forEach(record -> {
                     try {

@@ -29,6 +29,7 @@ public class SimilarityServiceImpl implements SimilarityService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Similarity> getSimilarToEvent(Long eventId) {
         List<Similarity> similarities = findByEventAIdOrEventBId(eventId);
 
@@ -44,6 +45,7 @@ public class SimilarityServiceImpl implements SimilarityService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Similarity> getSimilarToEvents(List<Long> eventIds) {
         List<Similarity> similarities = findByEventAIdInOrEventBIdIn(eventIds);
 

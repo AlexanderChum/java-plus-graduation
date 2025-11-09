@@ -15,7 +15,7 @@ import ru.yandex.practicum.location.dtos.LocationDto;
 
 import java.time.LocalDateTime;
 
-import static stat.constant.Const.DATE_TIME_FORMAT;
+import static ru.practicum.Constants.DATE_TIME_FORMAT;
 
 @Data
 @NoArgsConstructor

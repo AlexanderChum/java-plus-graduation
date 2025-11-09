@@ -29,12 +29,12 @@ public interface EventMapper {
     @Mapping(target = "categoryDto", source = "category")
     @Mapping(target = "initiator", source = "initiator")
     @Mapping(target = "locationDto", source = "location")
-    @Mapping(target = "views", ignore = true)
+    @Mapping(target = "rating", ignore = true)
     EventFullDto toFullDto(EventModel entity, CategoryDto category, UserShortDto initiator, LocationDto location);
 
     @Mapping(target = "id", source = "entity.id")
     @Mapping(target = "category", source = "category")
     @Mapping(target = "initiator", source = "initiator")
-    @Mapping(target = "views", ignore = true)
+    @Mapping(target = "rating", ignore = true)
     EventShortDto toShortDto(EventModel entity, CategoryDto category, UserShortDto initiator);
 }

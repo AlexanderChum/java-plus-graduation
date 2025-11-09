@@ -12,7 +12,7 @@ import ru.yandex.practicum.users.dtos.UserShortDto;
 
 import java.time.LocalDateTime;
 
-import static stat.constant.Const.DATE_TIME_FORMAT;
+import static ru.practicum.Constants.DATE_TIME_FORMAT;
 
 @Data
 @AllArgsConstructor
@@ -31,5 +31,5 @@ public class EventShortDto {
     UserShortDto initiator;
     Boolean paid;
     String title;
-    Long views;
+    Double rating;
 }

@@ -7,10 +7,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
-import stat.constant.Const;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static ru.practicum.Constants.DATE_TIME_FORMAT;
 
 @Data
 @Builder
@@ -22,7 +23,7 @@ public class ApiError {
     private String reason;
     private String message;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Const.DATE_TIME_FORMAT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_FORMAT)
     private LocalDateTime timestamp;
 
     private List<String> errors;

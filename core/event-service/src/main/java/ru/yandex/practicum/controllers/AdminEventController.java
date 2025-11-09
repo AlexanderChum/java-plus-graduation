@@ -23,7 +23,7 @@ import ru.yandex.practicum.service.AdminEventService;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static stat.constant.Const.DATE_TIME_FORMAT;
+import static ru.practicum.Constants.DATE_TIME_FORMAT;
 
 @RestController
 @RequestMapping("/admin/events")
